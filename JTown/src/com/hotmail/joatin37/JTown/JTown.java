@@ -12,6 +12,8 @@ import java.util.Vector;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -29,6 +31,9 @@ public class JTown extends JavaPlugin implements JTownSaveable {
 	JTownConfig config;
 	private JTownSaver saver;
 	
+	PlayerCommandHandler playercommand;
+	ServerCommandHandler servercommand;
+	
 	
 	
 	public static File jtowncollectionsfolder;	
@@ -41,10 +46,13 @@ public class JTown extends JavaPlugin implements JTownSaveable {
 		
 		jtowncollectionsfolder = new File (this.getDataFolder().getPath() + File.separator + "JTownCollections");
 		jtowncollectionsfolder.mkdir();
-		
-		
-		config = new JTownConfig(this);
-		
+		setupVault();
+		//this.getServer().getMessenger().registerOutgoingPluginChannel(plugin, channel)
+		getLogger().info("JTown started");
+	
+	}
+	
+	private void setupVault(){
 		if (getServer().getPluginManager().getPlugin("Vault") == null) {
             getLogger().info("Couldn't find Vault, going for op only mode");
         }else{
@@ -59,20 +67,17 @@ public class JTown extends JavaPlugin implements JTownSaveable {
         }catch (Exception e){getLogger().severe("No chat found, you must have a chat plugin for town chanels to work");}
 
         }
-
+	}
+	
+	@Override
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
+    	if (sender instanceof Player) {
+    			playercommand.onCommand((Player)sender, cmd, label, args);
+    		}else{
+    			servercommand.onCommand(sender, cmd, label, args);
+    	}
+		return true;
 		
-		//getServer().getPluginManager().registerEvents(new JTownChunkListener(this), this);
-		getCommand("jadmin").setExecutor(new JTownCommandExecutor(this));
-		//this.getServer().getMessenger().registerOutgoingPluginChannel(plugin, channel)
-		getLogger().info("JTown started");
-		
-		
-		
-		
-		/**
-		FileConfiguration c = YamlConfiguration.loadConfiguration(this.getResource("plugin.yml"));
-		getLogger().info(c.getString("author"));
-		**/
 	}
  
 	 
