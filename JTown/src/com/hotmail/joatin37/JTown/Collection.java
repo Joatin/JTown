@@ -8,4 +8,8 @@ public abstract class Collection {
 	public Collection (String name){
 		
 	}
+	
+	public String getName(){
+		return name;
+	}
 }
