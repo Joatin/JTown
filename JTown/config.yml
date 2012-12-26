@@ -1,0 +1,4 @@
+world:
+  allowpvp: OPTIONAL
+  wilderness:
+    allowpvp: FALSE

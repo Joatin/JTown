@@ -1,0 +1,18 @@
+name: JTown
+main: com.hotmail.joatin37.JTown.JTown
+version: 1.0
+description: A plugin that let's you create and manage towns
+load: POSTWORLD 
+author: Joatin Granlund
+commands:
+  town:
+    description: This is a demo command.
+    usage: /<command> arg
+    permission: 
+    permission-message: You don't have <permission> 
+  jadmin:
+    description: This is a demo command.
+    usage: /<command> arg
+    permission: 
+    permission-message: You don't have <permission> 
+permissions:
