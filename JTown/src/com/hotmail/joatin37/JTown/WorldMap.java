@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import com.hotmail.joatin37.JTown.WorldMap.chunk;
 import com.hotmail.joatin37.JTown.WorldMap.chunk.blockrow;
 
 public class WorldMap {
@@ -45,7 +46,14 @@ public class WorldMap {
 	public void save() {
 		if (config == null || configfile == null) {
 	    return;
-	    }    
+	    }
+		Iterator<chunk> iterator = chunks.values().iterator();
+		List<String>list = new Vector<String>(100, 50);
+		while(iterator.hasNext()){
+			list.add(iterator.next().save(config));
+		}
+		config.set("chunks", list);
+		
 	    try {
 	    	config.save(configfile);
 	    	jtown.getLogger().info("Succesfully saved world-"+world+".sav");
@@ -55,12 +63,14 @@ public class WorldMap {
 	}
 	
 	public class chunk{
-		private int posx;
-		private int posz;
+		private final String chunkname;
+		private final int posx;
+		private final int posz;
 		private HashMap<String, blockrow>blockrows;
 		
 		private chunk(FileConfiguration config, String chunkname){
 			blockrows=new HashMap<String, blockrow>(256);
+			this.chunkname=chunkname;
 			String[] s = chunkname.split(";");
 			posx=Integer.parseInt(s[0]);
 			posz=Integer.parseInt(s[1]);
@@ -73,9 +83,21 @@ public class WorldMap {
 			}
 			
 		}
+		
+		public String save(FileConfiguration config){
+			Iterator<blockrow> iterator = blockrows.values().iterator();
+			List <String> list = new Vector<String>(256, 0);
+			while(iterator.hasNext()){
+				list.add(iterator.next().save());
+			}
+			config.set(chunkname+"blockrows", list);
+			return chunkname;
+		}
+		
 		public class blockrow{
-			private int posx;
-			private int posz;
+			private final String blockname;
+			private final int posx;
+			private final int posz;
 			private int maxheight;
 			private int minheight;
 			private int collection;
@@ -83,6 +105,7 @@ public class WorldMap {
 			private int plot;
 			
 		private blockrow(FileConfiguration config, String chunkname, String blockname){
+			this.blockname=blockname;
 			String[] s1 = blockname.split(";");
 			posx=Integer.parseInt(s1[0]);
 			posz=Integer.parseInt(s1[1]);
@@ -91,6 +114,15 @@ public class WorldMap {
 			collection = config.getInt(chunkname+"."+blockname+".collection");
 			baseland = config.getInt(chunkname+"."+blockname+".baseland");
 			plot = config.getInt(chunkname+"."+blockname+".plot");
+		}
+		public String save(){
+			config.set(chunkname+"."+blockname+".maxheight", maxheight);
+			config.set(chunkname+"."+blockname+".minheight", minheight);
+			config.set(chunkname+"."+blockname+".collection", collection);
+			config.set(chunkname+"."+blockname+".baseland", baseland);
+			config.set(chunkname+"."+blockname+".plot", plot);
+			
+			return blockname;
 		}
 			
 		}
