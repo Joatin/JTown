@@ -1,4 +1,4 @@
-package com.hotmail.joatin37.JTown;
+package com.hotmail.joatin37.JTown.worldmap;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,8 +12,9 @@ import java.util.logging.Level;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import com.hotmail.joatin37.JTown.WorldMap.chunk;
-import com.hotmail.joatin37.JTown.WorldMap.chunk.blockrow;
+import com.hotmail.joatin37.JTown.JTown;
+import com.hotmail.joatin37.JTown.worldmap.WorldMap.chunk;
+import com.hotmail.joatin37.JTown.worldmap.WorldMap.chunk.blockrow;
 
 public class WorldMap {
 	
