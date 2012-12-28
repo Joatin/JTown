@@ -6,26 +6,33 @@ import org.bukkit.Location;
 
 public class JChunk {
 
+	private final int x;
+	private final int z;
+
 	private HashMap<blockpos, BlockRow> blockrows;
 
-	public JChunk() {
+	public JChunk(int x, int z) {
+		this.x = x;
+		this.z = z;
+		this.blockrows = new HashMap<blockpos, BlockRow>();
+	}
 
+	public void put(int x, int z, BlockRow row) {
+		this.blockrows.put(new blockpos(x, z), row);
 	}
 
 	public BlockRow get(Location loc) {
-		return this.blockrows.get(new blockpos(loc.getBlockX(),
-				loc.getBlockY(), loc.getBlockZ()));
+		return this.blockrows
+				.get(new blockpos(loc.getBlockX(), loc.getBlockZ()));
 	}
 
-	private class blockpos {
+	public class blockpos {
 		public final int x;
-		public final int y;
 		public final int z;
 
-		public blockpos(int x, int y, int z) {
+		public blockpos(int x, int z) {
 			this.x = x;
 			this.z = z;
-			this.y = y;
 		}
 	}
 }

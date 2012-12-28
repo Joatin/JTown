@@ -42,6 +42,7 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.Vector;
 
 import org.bukkit.Location;
@@ -81,7 +82,7 @@ public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
 		DataInputStream input;
 		try {
 			input = new DataInputStream(new FileInputStream(this.savefile));
-
+			input.readInt(); // reads the version number;
 			vec = new Vector<ChunkPos>(input.readInt(), 5);
 			try {
 				while (true) {
@@ -134,6 +135,56 @@ public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
 	}
 
 	private JChunk loadJChunk(ChunkPos pos) {
+		DataInputStream input;
+		try {
+			input = new DataInputStream(new FileInputStream(this.savefile));
+			input.skip(8);
+			try {
+				while (true) {
+					int size = input.readInt();
+					int a = input.readInt();
+					int b = input.readInt();
+					if (a == pos.getX() && b == pos.getZ()) {
+						JChunk chunk = new JChunk(a, b);
+						for (int i = 0; i < size - 8 / BlockRow.Size; i++) {
+							long l1 = input.readLong();
+							long l2 = input.readLong();
+							long l3 = input.readLong();
+							long l4 = input.readLong();
+							int i1 = input.readInt();
+							int i2 = input.readInt();
+							int i3 = input.readInt();
+							int i4 = input.readInt();
+							UUID uuid1 = null;
+							UUID uuid2 = null;
+							if (l1 != 0 && l2 != 0) {
+								uuid1 = new UUID(l1, l2);
+							}
+							if (l3 != 0 && l4 != 0) {
+								uuid1 = new UUID(l3, l4);
+							}
+							chunk.put(i1, 12, new BlockRow(uuid1, uuid2, i1,
+									i2, i3, i4));
+						}
+						input.close();
+						return chunk;
+					}
+
+					input.skip(size - 8);
+
+				}
+
+			} catch (EOFException e) {
+				input.close();
+				return null;
+			}
+		} catch (FileNotFoundException e) {
+			this.jtown.getLogger().warning(
+					"No the file " + this.savefile + " was missing");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 
 	}

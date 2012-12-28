@@ -312,195 +312,242 @@ public final class CollectionManager implements Listener {
 
 	}
 
+	@EventHandler
 	public void onCreeperPowerEvent(CreeperPowerEvent event) {
 
 	}
 
+	@EventHandler
 	public void onEntityBreakDoorEvent(EntityBreakDoorEvent event) {
 
 	}
 
+	@EventHandler
 	public void onEntityChangeBlockEvent(EntityChangeBlockEvent event) {
 
 	}
 
+	@EventHandler
 	public void onEntityCombustByBlockEvent(EntityCombustByBlockEvent event) {
 
 	}
 
+	@EventHandler
 	public void onEntityCombustByEntityEvent(EntityCombustByEntityEvent event) {
 
 	}
 
+	@EventHandler
 	public void onEntityCombustEvent(EntityCombustEvent event) {
 
 	}
 
+	@EventHandler
 	public void onEntityCreatePortalEvent(EntityCreatePortalEvent event) {
 
 	}
 
+	@EventHandler
 	public void onEntityDamageByBlockEvent(EntityDamageByBlockEvent event) {
 
 	}
 
+	@EventHandler
 	public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent event) {
 
 	}
 
+	@EventHandler
 	public void onEntityDamageEvent(EntityDamageEvent event) {
 
 	}
 
+	@EventHandler
 	public void onEntityEvent(EntityEvent event) {
 
 	}
 
+	@EventHandler
 	public void onEntityExplodeEvent(EntityExplodeEvent event) {
 
 	}
 
+	@EventHandler
 	public void onEntityInteractEvent(EntityInteractEvent event) {
 
 	}
 
+	@EventHandler
 	public void onEntityPortalEnterEvent(EntityPortalEnterEvent event) {
 
 	}
 
+	@EventHandler
 	public void onEntityRegainHealthEvent(EntityRegainHealthEvent event) {
 
 	}
 
+	@EventHandler
 	public void onEntityShootBowEvent(EntityShootBowEvent event) {
 
 	}
 
+	@EventHandler
 	public void onEntityTameEvent(EntityTameEvent event) {
 
 	}
 
+	@EventHandler
 	public void onEntityTargetEvent(EntityTargetEvent event) {
 
 	}
 
+	@EventHandler
 	public void onEntityTargetLivingEntityEvent(
 			EntityTargetLivingEntityEvent event) {
 
 	}
 
+	@EventHandler
 	public void onEntityTeleportEvent(EntityTeleportEvent event) {
 
 	}
 
+	@EventHandler
 	public void onExpBottleEvent(ExpBottleEvent event) {
 
 	}
 
+	@EventHandler
 	public void onExplosionPrimeEvent(ExplosionPrimeEvent event) {
 
 	}
 
+	@EventHandler
 	public void onFoodLevelChangeEvent(FoodLevelChangeEvent event) {
 
 	}
 
+	@EventHandler
 	public void onItemDespawnEvent(ItemDespawnEvent event) {
 
 	}
 
+	@EventHandler
 	public void onItemSpawnEvent(ItemSpawnEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPigZapEvent(PigZapEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerDeathEvent(PlayerDeathEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPotionSplashEvent(PotionSplashEvent event) {
 
 	}
 
+	@EventHandler
 	public void onProjectileHitEvent(ProjectileHitEvent event) {
 
 	}
 
+	@EventHandler
 	public void onProjectileLaunchEvent(ProjectileLaunchEvent event) {
 
 	}
 
+	@EventHandler
 	public void onSheepDyeWoolEvent(SheepDyeWoolEvent event) {
 
 	}
 
+	@EventHandler
 	public void onSheepRegrowWoolEvent(SheepRegrowWoolEvent event) {
 
 	}
 
+	@EventHandler
 	public void onSlimeSplitEvent(SlimeSplitEvent event) {
 
 	}
 
 	// Hanging listeners
 
+	@EventHandler
 	public void onHangingBreakByEntityEvent(HangingBreakByEntityEvent event) {
 
 	}
 
+	@EventHandler
 	public void onHangingBreakEvent(HangingBreakEvent event) {
 
 	}
 
+	@EventHandler
 	public void onHangingEvent(HangingEvent event) {
 
 	}
 
+	@EventHandler
 	public void onHangingPlaceEvent(HangingPlaceEvent event) {
 
 	}
 
 	// Inventory listeners
 
+	@EventHandler
 	public void onBrewEvent(BrewEvent event) {
 
 	}
 
+	@EventHandler
 	public void onCraftItemEvent(CraftItemEvent event) {
 
 	}
 
+	@EventHandler
 	public void onFurnaceBurnEvent(FurnaceBurnEvent event) {
 
 	}
 
+	@EventHandler
 	public void onFurnaceExtractEvent(FurnaceExtractEvent event) {
 
 	}
 
+	@EventHandler
 	public void onFurnaceSmeltEvent(FurnaceSmeltEvent event) {
 
 	}
 
+	@EventHandler
 	public void onInventoryClickEvent(InventoryClickEvent event) {
 
 	}
 
+	@EventHandler
 	public void onInventoryCloseEvent(InventoryCloseEvent event) {
 
 	}
 
+	@EventHandler
 	public void onInventoryEvent(InventoryEvent event) {
 
 	}
 
+	@EventHandler
 	public void onInventoryOpenEvent(InventoryOpenEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPrepareItemCraftEvent(PrepareItemCraftEvent event) {
 
 	}

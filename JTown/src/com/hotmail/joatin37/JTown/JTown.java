@@ -33,12 +33,6 @@
 
 package com.hotmail.joatin37.JTown;
 
-import java.io.File;
-
-import net.milkbowl.vault.chat.Chat;
-import net.milkbowl.vault.economy.Economy;
-import net.milkbowl.vault.permission.Permission;
-
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -48,25 +42,17 @@ import com.hotmail.joatin37.JTown.util.GraphCollector;
 
 public class JTown extends JavaPlugin {
 
-	JTownConfig config;
-	private JTownSaver saver;
-
 	PlayerCommandHandler playercommand;
 	ServerCommandHandler servercommand;
 
 	private GraphCollector graphcollector;
 
-	public static File jtowncollectionsfolder;
-	public static Economy econ = null;
-	public static Permission perms = null;
-	public static Chat chat = null;
+	private CollectionManager cmanager;
 
 	@Override
 	public void onEnable() {
 
-		jtowncollectionsfolder = new File(this.getDataFolder().getPath()
-				+ File.separator + "JTownCollections");
-		jtowncollectionsfolder.mkdir();
+		this.cmanager = new CollectionManager(this);
 
 		this.graphcollector = new GraphCollector(this);
 
