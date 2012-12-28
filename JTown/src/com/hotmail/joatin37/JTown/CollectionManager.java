@@ -14,7 +14,6 @@ import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockCanBuildEvent;
 import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.block.BlockDispenseEvent;
-import org.bukkit.event.block.BlockEvent;
 import org.bukkit.event.block.BlockExpEvent;
 import org.bukkit.event.block.BlockFadeEvent;
 import org.bukkit.event.block.BlockFormEvent;
@@ -22,7 +21,6 @@ import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.block.BlockGrowEvent;
 import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
-import org.bukkit.event.block.BlockPistonEvent;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -45,7 +43,6 @@ import org.bukkit.event.entity.EntityCreatePortalEvent;
 import org.bukkit.event.entity.EntityDamageByBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.entity.EntityPortalEnterEvent;
@@ -70,7 +67,6 @@ import org.bukkit.event.entity.SheepRegrowWoolEvent;
 import org.bukkit.event.entity.SlimeSplitEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.hanging.HangingBreakEvent;
-import org.bukkit.event.hanging.HangingEvent;
 import org.bukkit.event.hanging.HangingPlaceEvent;
 import org.bukkit.event.inventory.BrewEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
@@ -88,7 +84,6 @@ import org.bukkit.event.player.PlayerAnimationEvent;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerBedLeaveEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
-import org.bukkit.event.player.PlayerBucketEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerChannelEvent;
@@ -96,7 +91,6 @@ import org.bukkit.event.player.PlayerChatTabCompleteEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerEggThrowEvent;
-import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerGameModeChangeEvent;
@@ -121,13 +115,11 @@ import org.bukkit.event.player.PlayerToggleSprintEvent;
 import org.bukkit.event.player.PlayerUnregisterChannelEvent;
 import org.bukkit.event.player.PlayerVelocityEvent;
 import org.bukkit.event.vehicle.VehicleBlockCollisionEvent;
-import org.bukkit.event.vehicle.VehicleCollisionEvent;
 import org.bukkit.event.vehicle.VehicleCreateEvent;
 import org.bukkit.event.vehicle.VehicleDamageEvent;
 import org.bukkit.event.vehicle.VehicleDestroyEvent;
 import org.bukkit.event.vehicle.VehicleEnterEvent;
 import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
-import org.bukkit.event.vehicle.VehicleEvent;
 import org.bukkit.event.vehicle.VehicleExitEvent;
 import org.bukkit.event.vehicle.VehicleMoveEvent;
 import org.bukkit.event.vehicle.VehicleUpdateEvent;
@@ -150,6 +142,7 @@ public final class CollectionManager implements Listener {
 		this.worldmap = new WorldMap(this.jtown);
 		this.jtown.getServer().getPluginManager()
 				.registerEvents(this, this.jtown);
+
 	}
 
 	private void load() {
@@ -176,7 +169,7 @@ public final class CollectionManager implements Listener {
 
 	/*------EventListeners------*/
 
-	// All block listeners
+	// block listeners
 
 	@EventHandler
 	public void onBlockBreakEvent(BlockBreakEvent event) {
@@ -200,11 +193,6 @@ public final class CollectionManager implements Listener {
 
 	@EventHandler
 	public void onBlockDispenseEvent(BlockDispenseEvent event) {
-
-	}
-
-	@EventHandler
-	public void onBlockEvent(BlockEvent event) {
 
 	}
 
@@ -240,11 +228,6 @@ public final class CollectionManager implements Listener {
 
 	@EventHandler
 	public void onBlockPhysicsEvent(BlockPhysicsEvent event) {
-
-	}
-
-	@EventHandler
-	public void onBlockPistonEvent(BlockPistonEvent event) {
 
 	}
 
@@ -293,7 +276,7 @@ public final class CollectionManager implements Listener {
 
 	}
 
-	// Enchantment Listeners
+	// enchantment listeners
 
 	@EventHandler
 	public void onEnchantItemEvent(EnchantItemEvent event) {
@@ -305,7 +288,7 @@ public final class CollectionManager implements Listener {
 
 	}
 
-	// Entity listeners
+	// enitity listeners
 
 	@EventHandler
 	public void onCreatureSpawnEvent(CreatureSpawnEvent event) {
@@ -359,11 +342,6 @@ public final class CollectionManager implements Listener {
 
 	@EventHandler
 	public void onEntityDamageEvent(EntityDamageEvent event) {
-
-	}
-
-	@EventHandler
-	public void onEntityEvent(EntityEvent event) {
 
 	}
 
@@ -478,7 +456,7 @@ public final class CollectionManager implements Listener {
 
 	}
 
-	// Hanging listeners
+	// hanging listeners
 
 	@EventHandler
 	public void onHangingBreakByEntityEvent(HangingBreakByEntityEvent event) {
@@ -491,16 +469,11 @@ public final class CollectionManager implements Listener {
 	}
 
 	@EventHandler
-	public void onHangingEvent(HangingEvent event) {
-
-	}
-
-	@EventHandler
 	public void onHangingPlaceEvent(HangingPlaceEvent event) {
 
 	}
 
-	// Inventory listeners
+	// inventory listeners
 
 	@EventHandler
 	public void onBrewEvent(BrewEvent event) {
@@ -552,7 +525,7 @@ public final class CollectionManager implements Listener {
 
 	}
 
-	// Player listeners
+	// player listeners
 
 	@EventHandler
 	public void onAsyncPlayerChatEvent(AsyncPlayerChatEvent event) {
@@ -581,11 +554,6 @@ public final class CollectionManager implements Listener {
 
 	@EventHandler
 	public void onPlayerBucketEmptyEvent(PlayerBucketEmptyEvent event) {
-
-	}
-
-	@EventHandler
-	public void onPlayerBucketEvent(PlayerBucketEvent event) {
 
 	}
 
@@ -622,11 +590,6 @@ public final class CollectionManager implements Listener {
 
 	@EventHandler
 	public void onPlayerEggThrowEvent(PlayerEggThrowEvent event) {
-
-	}
-
-	@EventHandler
-	public void onPlayerEvent(PlayerEvent event) {
 
 	}
 
@@ -746,15 +709,10 @@ public final class CollectionManager implements Listener {
 
 	}
 
-	// Vehicle listeners
+	// vehicle listeners
 
 	@EventHandler
 	public void onVehicleBlockCollisionEvent(VehicleBlockCollisionEvent event) {
-
-	}
-
-	@EventHandler
-	public void onVehicleCollisionEvent(VehicleCollisionEvent event) {
 
 	}
 
@@ -784,11 +742,6 @@ public final class CollectionManager implements Listener {
 	}
 
 	@EventHandler
-	public void onVehicleEvent(VehicleEvent event) {
-
-	}
-
-	@EventHandler
 	public void onVehicleExitEvent(VehicleExitEvent event) {
 
 	}
@@ -803,14 +756,14 @@ public final class CollectionManager implements Listener {
 
 	}
 
-	// Weather listeners
+	// weather listeners
 
 	@EventHandler
 	public void onLightningStrikeEvent(LightningStrikeEvent event) {
 
 	}
 
-	// World listeners
+	// world listeners
 
 	@EventHandler
 	public void onPortalCreateEvent(PortalCreateEvent event) {

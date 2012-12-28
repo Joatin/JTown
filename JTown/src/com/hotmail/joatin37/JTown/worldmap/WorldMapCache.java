@@ -98,7 +98,7 @@ public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
 			}
 		} catch (FileNotFoundException e) {
 			this.jtown.getLogger().warning(
-					"No the file " + this.savefile + " was missing");
+					"The file " + this.savefile + " was missing");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
