@@ -135,15 +135,19 @@ import org.bukkit.event.weather.LightningStrikeEvent;
 import org.bukkit.event.world.PortalCreateEvent;
 import org.bukkit.event.world.StructureGrowEvent;
 
+import com.hotmail.joatin37.JTown.worldmap.WorldMap;
+
 public final class CollectionManager implements Listener {
 
 	private HashMap<String, Collection> collections;
 	private final JTown jtown;
 	private File configfile;
 	private FileConfiguration saveconfig;
+	private WorldMap worldmap;
 
 	public CollectionManager(JTown jtown) {
 		this.jtown = jtown;
+		this.worldmap = new WorldMap(this.jtown);
 		this.jtown.getServer().getPluginManager()
 				.registerEvents(this, this.jtown);
 	}
@@ -508,198 +512,246 @@ public final class CollectionManager implements Listener {
 
 	}
 
+	@EventHandler
 	public void onAsyncPlayerPreLoginEvent(AsyncPlayerPreLoginEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerAnimationEvent(PlayerAnimationEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerBedEnterEvent(PlayerBedEnterEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerBedLeaveEvent(PlayerBedLeaveEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerBucketEmptyEvent(PlayerBucketEmptyEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerBucketEvent(PlayerBucketEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerBucketFillEvent(PlayerBucketFillEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerChangedWorldEvent(PlayerChangedWorldEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerChannelEvent(PlayerChannelEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerChatTabCompleteEvent(PlayerChatTabCompleteEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerCommandPreprocessEvent(
 			PlayerCommandPreprocessEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerDropItemEvent(PlayerDropItemEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerEggThrowEvent(PlayerEggThrowEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerEvent(PlayerEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerExpChangeEvent(PlayerExpChangeEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerFishEvent(PlayerFishEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerGameModeChangeEvent(PlayerGameModeChangeEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerInteractEntityEvent(PlayerInteractEntityEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerInteractEvent(PlayerInteractEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerItemBreakEvent(PlayerItemBreakEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerItemHeldEvent(PlayerItemHeldEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerJoinEvent(PlayerJoinEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerKickEvent(PlayerKickEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerLevelChangeEvent(PlayerLevelChangeEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerLoginEvent(PlayerLoginEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerPickupItemEvent(PlayerPickupItemEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerPortalEvent(PlayerMoveEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerQuitEvent(PlayerQuitEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerRegisterChannelEvent(PlayerRegisterChannelEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerRespawnEvent(PlayerRespawnEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerShearEntityEvent(PlayerShearEntityEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerTeleportEvent(PlayerTeleportEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerToggleFlightEvent(PlayerToggleFlightEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerToggleSneakEvent(PlayerToggleSneakEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerToggleSprintEvent(PlayerToggleSprintEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerUnregisterChannelEvent(
 			PlayerUnregisterChannelEvent event) {
 
 	}
 
+	@EventHandler
 	public void onPlayerVelocityEvent(PlayerVelocityEvent event) {
 
 	}
 
 	// Vehicle listeners
 
+	@EventHandler
 	public void onVehicleBlockCollisionEvent(VehicleBlockCollisionEvent event) {
 
 	}
 
+	@EventHandler
 	public void onVehicleCollisionEvent(VehicleCollisionEvent event) {
 
 	}
 
+	@EventHandler
 	public void onVehicleCreateEvent(VehicleCreateEvent event) {
 
 	}
 
+	@EventHandler
 	public void onVehicleDamageEvent(VehicleDamageEvent event) {
 
 	}
 
+	@EventHandler
 	public void onVehicleDestroyEvent(VehicleDestroyEvent event) {
 
 	}
 
+	@EventHandler
 	public void onVehicleEnterEvent(VehicleEnterEvent event) {
 
 	}
 
+	@EventHandler
 	public void onVehicleEntityCollisionEvent(VehicleEntityCollisionEvent event) {
 
 	}
 
+	@EventHandler
 	public void onVehicleEvent(VehicleEvent event) {
 
 	}
 
+	@EventHandler
 	public void onVehicleExitEvent(VehicleExitEvent event) {
 
 	}
 
+	@EventHandler
 	public void onVehicleMoveEvent(VehicleMoveEvent event) {
 
 	}
 
+	@EventHandler
 	public void onVehicleUpdateEvent(VehicleUpdateEvent event) {
 
 	}

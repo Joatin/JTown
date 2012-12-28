@@ -44,14 +44,17 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class JTown extends JavaPlugin implements JTownSaveable {
-	int nexttownid;
+import com.hotmail.joatin37.JTown.util.GraphCollector;
+
+public class JTown extends JavaPlugin {
 
 	JTownConfig config;
 	private JTownSaver saver;
 
 	PlayerCommandHandler playercommand;
 	ServerCommandHandler servercommand;
+
+	private GraphCollector graphcollector;
 
 	public static File jtowncollectionsfolder;
 	public static Economy econ = null;
@@ -64,41 +67,11 @@ public class JTown extends JavaPlugin implements JTownSaveable {
 		jtowncollectionsfolder = new File(this.getDataFolder().getPath()
 				+ File.separator + "JTownCollections");
 		jtowncollectionsfolder.mkdir();
-		this.setupVault();
-		// this.getServer().getMessenger().registerOutgoingPluginChannel(plugin,
-		// channel)
+
+		this.graphcollector = new GraphCollector(this);
+
 		this.getLogger().info("JTown started");
 
-	}
-
-	private void setupVault() {
-		if (this.getServer().getPluginManager().getPlugin("Vault") == null) {
-			this.getLogger()
-					.info("Couldn't find Vault, going for op only mode");
-		} else {
-			try {
-				econ = this.getServer().getServicesManager()
-						.getRegistration(Economy.class).getProvider();
-			} catch (Exception e) {
-				this.getLogger()
-						.severe("No economy binding found, you must provide a economy plugin in order to make this work");
-			}
-			try {
-				perms = this.getServer().getServicesManager()
-						.getRegistration(Permission.class).getProvider();
-			} catch (Exception e) {
-				this.getLogger()
-						.severe("No permission plugin found, all permissions will be reserved for op's only");
-			}
-			try {
-				chat = this.getServer().getServicesManager()
-						.getRegistration(Chat.class).getProvider();
-			} catch (Exception e) {
-				this.getLogger()
-						.severe("No chat found, you must have a chat plugin for town chanels to work");
-			}
-
-		}
 	}
 
 	@Override
@@ -120,8 +93,4 @@ public class JTown extends JavaPlugin implements JTownSaveable {
 
 	}
 
-	@Override
-	public void save() {
-
-	}
 }
