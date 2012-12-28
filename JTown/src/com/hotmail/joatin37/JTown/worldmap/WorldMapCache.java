@@ -33,11 +33,23 @@
 
 package com.hotmail.joatin37.JTown.worldmap;
 
+import java.io.DataInputStream;
+import java.io.EOFException;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
-public class WorldMapCache<K, V> extends LinkedHashMap<K, V> {
+import org.bukkit.Location;
+
+import com.hotmail.joatin37.JTown.JTown;
+import com.hotmail.joatin37.JTown.util.ChunkPos;
+
+public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
 
 	/**
 	 * 
@@ -46,14 +58,83 @@ public class WorldMapCache<K, V> extends LinkedHashMap<K, V> {
 
 	private final int MAX_ENTRIES;
 
-	public WorldMapCache(int maxcapacity, File file) {
+	private final List<ChunkPos> allchunks;
+
+	private final File savefile;
+
+	private final JTown jtown;
+
+	private final String world;
+
+	public WorldMapCache(int maxcapacity, File file, JTown jtown, String world) {
 		super(maxcapacity, 0.75f, true);
+		this.world = world;
 		this.MAX_ENTRIES = maxcapacity;
+		this.savefile = file;
+		this.jtown = jtown;
+		this.allchunks = this.loadAllReferences();
+
+	}
+
+	private List<ChunkPos> loadAllReferences() {
+		Vector<ChunkPos> vec = null;
+		DataInputStream input;
+		try {
+			input = new DataInputStream(new FileInputStream(this.savefile));
+
+			vec = new Vector<ChunkPos>(input.readInt(), 5);
+			try {
+				while (true) {
+					int size = input.readInt();
+					int a = input.readInt();
+					int b = input.readInt();
+					vec.add(ChunkPos.Wrap(a, b));
+					input.skip(size - 8);
+
+				}
+			} catch (EOFException e) {
+				input.close();
+			}
+		} catch (FileNotFoundException e) {
+			this.jtown.getLogger().warning(
+					"No the file " + this.savefile + " was missing");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (vec == null) {
+			vec = new Vector<ChunkPos>();
+		}
+		return vec;
 	}
 
 	@Override
-	protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {
+	protected boolean removeEldestEntry(Map.Entry<ChunkPos, JChunk> eldest) {
 		return this.size() > this.MAX_ENTRIES;
 	}
 
+	public BlockRow get(Location loc) {
+		ChunkPos pos = ChunkPos.Wrap(loc.getChunk().getX(), loc.getChunk()
+				.getZ());
+		if (this.containsKey(pos)) {
+			return super.get(pos).get(loc);
+		} else {
+			if (this.allchunks.contains(pos)) {
+				JChunk jchunk = this.loadJChunk(pos);
+				if (jchunk == null) {
+					return null;
+				} else {
+					return jchunk.get(loc);
+				}
+			} else {
+				return null;
+			}
+		}
+
+	}
+
+	private JChunk loadJChunk(ChunkPos pos) {
+		return null;
+
+	}
 }
