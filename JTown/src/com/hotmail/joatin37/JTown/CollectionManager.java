@@ -3,6 +3,7 @@ package com.hotmail.joatin37.JTown;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.UUID;
 import java.util.logging.Level;
 
 import org.bukkit.configuration.file.FileConfiguration;
@@ -131,7 +132,7 @@ import com.hotmail.joatin37.JTown.worldmap.WorldMap;
 
 public final class CollectionManager implements Listener {
 
-	private HashMap<String, Collection> collections;
+	private HashMap<UUID, Collection> collections;
 	private final JTown jtown;
 	private File configfile;
 	private FileConfiguration saveconfig;
@@ -173,107 +174,254 @@ public final class CollectionManager implements Listener {
 
 	@EventHandler
 	public void onBlockBreakEvent(BlockBreakEvent event) {
-
+		Collection coll = this.collections.get(this.worldmap.get(
+				event.getBlock().getLocation()).getCollectionId());
+		if (coll == null) {
+			this.worldmap.set(null, null, null);
+		} else {
+			coll.BlockBreakEvent(event,
+					this.worldmap.get(event.getBlock().getLocation()));
+		}
 	}
 
 	@EventHandler
 	public void onBlockBurnEvent(BlockBurnEvent event) {
-
+		Collection coll = this.collections.get(this.worldmap.get(
+				event.getBlock().getLocation()).getCollectionId());
+		if (coll == null) {
+			this.worldmap.set(null, null, null);
+		} else {
+			coll.BlockBurnEvent(event,
+					this.worldmap.get(event.getBlock().getLocation()));
+		}
 	}
 
 	@EventHandler
 	public void onBlockCanBuildEvent(BlockCanBuildEvent event) {
-
+		Collection coll = this.collections.get(this.worldmap.get(
+				event.getBlock().getLocation()).getCollectionId());
+		if (coll == null) {
+			this.worldmap.set(null, null, null);
+		} else {
+			coll.BlockCanBuildEvent(event,
+					this.worldmap.get(event.getBlock().getLocation()));
+		}
 	}
 
 	@EventHandler
 	public void onBlockDamageEvent(BlockDamageEvent event) {
-
+		Collection coll = this.collections.get(this.worldmap.get(
+				event.getBlock().getLocation()).getCollectionId());
+		if (coll == null) {
+			this.worldmap.set(null, null, null);
+		} else {
+			coll.BlockDamageEvent(event,
+					this.worldmap.get(event.getBlock().getLocation()));
+		}
 	}
 
 	@EventHandler
 	public void onBlockDispenseEvent(BlockDispenseEvent event) {
-
+		Collection coll = this.collections.get(this.worldmap.get(
+				event.getBlock().getLocation()).getCollectionId());
+		if (coll == null) {
+			this.worldmap.set(null, null, null);
+		} else {
+			coll.BlockDispenseEvent(event,
+					this.worldmap.get(event.getBlock().getLocation()));
+		}
 	}
 
 	@EventHandler
 	public void onBlockExpEvent(BlockExpEvent event) {
-
+		Collection coll = this.collections.get(this.worldmap.get(
+				event.getBlock().getLocation()).getCollectionId());
+		if (coll == null) {
+			this.worldmap.set(null, null, null);
+		} else {
+			coll.BlockExpEvent(event,
+					this.worldmap.get(event.getBlock().getLocation()));
+		}
 	}
 
 	@EventHandler
 	public void onBlockFadeEvent(BlockFadeEvent event) {
-
+		Collection coll = this.collections.get(this.worldmap.get(
+				event.getBlock().getLocation()).getCollectionId());
+		if (coll == null) {
+			this.worldmap.set(null, null, null);
+		} else {
+			coll.BlockFadeEvent(event,
+					this.worldmap.get(event.getBlock().getLocation()));
+		}
 	}
 
 	@EventHandler
 	public void onBlockFormEvent(BlockFormEvent event) {
-
+		Collection coll = this.collections.get(this.worldmap.get(
+				event.getBlock().getLocation()).getCollectionId());
+		if (coll == null) {
+			this.worldmap.set(null, null, null);
+		} else {
+			coll.BlockFormEvent(event,
+					this.worldmap.get(event.getBlock().getLocation()));
+		}
 	}
 
 	@EventHandler
 	public void onBlockFromToEvent(BlockFromToEvent event) {
-
+		Collection coll = this.collections.get(this.worldmap.get(
+				event.getBlock().getLocation()).getCollectionId());
+		if (coll == null) {
+			this.worldmap.set(null, null, null);
+		} else {
+			coll.BlockFromToEvent(event,
+					this.worldmap.get(event.getBlock().getLocation()));
+		}
 	}
 
 	@EventHandler
 	public void onBlockGrowEvent(BlockGrowEvent event) {
-
+		Collection coll = this.collections.get(this.worldmap.get(
+				event.getBlock().getLocation()).getCollectionId());
+		if (coll == null) {
+			this.worldmap.set(null, null, null);
+		} else {
+			coll.BlockGrowEvent(event,
+					this.worldmap.get(event.getBlock().getLocation()));
+		}
 	}
 
 	@EventHandler
 	public void onBlockIgniteEvent(BlockIgniteEvent event) {
-
+		Collection coll = this.collections.get(this.worldmap.get(
+				event.getBlock().getLocation()).getCollectionId());
+		if (coll == null) {
+			this.worldmap.set(null, null, null);
+		} else {
+			coll.BlockIgniteEvent(event,
+					this.worldmap.get(event.getBlock().getLocation()));
+		}
 	}
 
 	@EventHandler
 	public void onBlockPhysicsEvent(BlockPhysicsEvent event) {
-
+		Collection coll = this.collections.get(this.worldmap.get(
+				event.getBlock().getLocation()).getCollectionId());
+		if (coll == null) {
+			this.worldmap.set(null, null, null);
+		} else {
+			coll.BlockPhysicsEvent(event,
+					this.worldmap.get(event.getBlock().getLocation()));
+		}
 	}
 
 	@EventHandler
 	public void onBlockPistonExtendEvent(BlockPistonExtendEvent event) {
-
+		Collection coll = this.collections.get(this.worldmap.get(
+				event.getBlock().getLocation()).getCollectionId());
+		if (coll == null) {
+			this.worldmap.set(null, null, null);
+		} else {
+			coll.BlockPistonExtendEvent(event,
+					this.worldmap.get(event.getBlock().getLocation()));
+		}
 	}
 
 	@EventHandler
 	public void onBlockPistonRetractEvent(BlockPistonRetractEvent event) {
-
+		Collection coll = this.collections.get(this.worldmap.get(
+				event.getBlock().getLocation()).getCollectionId());
+		if (coll == null) {
+			this.worldmap.set(null, null, null);
+		} else {
+			coll.BlockPistonRetractEvent(event,
+					this.worldmap.get(event.getBlock().getLocation()));
+		}
 	}
 
 	@EventHandler
 	public void onBlockPlaceEvent(BlockPlaceEvent event) {
-
+		Collection coll = this.collections.get(this.worldmap.get(
+				event.getBlock().getLocation()).getCollectionId());
+		if (coll == null) {
+			this.worldmap.set(null, null, null);
+		} else {
+			coll.BlockPlaceEvent(event,
+					this.worldmap.get(event.getBlock().getLocation()));
+		}
 	}
 
 	@EventHandler
 	public void onBlockRedstoneEvent(BlockRedstoneEvent event) {
-
+		Collection coll = this.collections.get(this.worldmap.get(
+				event.getBlock().getLocation()).getCollectionId());
+		if (coll == null) {
+			this.worldmap.set(null, null, null);
+		} else {
+			coll.BlockRedstoneEvent(event,
+					this.worldmap.get(event.getBlock().getLocation()));
+		}
 	}
 
 	@EventHandler
 	public void onBlockSpreadEvent(BlockSpreadEvent event) {
-
+		Collection coll = this.collections.get(this.worldmap.get(
+				event.getBlock().getLocation()).getCollectionId());
+		if (coll == null) {
+			this.worldmap.set(null, null, null);
+		} else {
+			coll.BlockSpreadEvent(event,
+					this.worldmap.get(event.getBlock().getLocation()));
+		}
 	}
 
 	@EventHandler
 	public void onEntityBlockFormEvent(EntityBlockFormEvent event) {
-
+		Collection coll = this.collections.get(this.worldmap.get(
+				event.getBlock().getLocation()).getCollectionId());
+		if (coll == null) {
+			this.worldmap.set(null, null, null);
+		} else {
+			coll.EntityBlockFormEvent(event,
+					this.worldmap.get(event.getBlock().getLocation()));
+		}
 	}
 
 	@EventHandler
 	public void onLeavesDecayEvent(LeavesDecayEvent event) {
-
+		Collection coll = this.collections.get(this.worldmap.get(
+				event.getBlock().getLocation()).getCollectionId());
+		if (coll == null) {
+			this.worldmap.set(null, null, null);
+		} else {
+			coll.LeavesDecayEvent(event,
+					this.worldmap.get(event.getBlock().getLocation()));
+		}
 	}
 
 	@EventHandler
 	public void onNotePlayEvent(NotePlayEvent event) {
-
+		Collection coll = this.collections.get(this.worldmap.get(
+				event.getBlock().getLocation()).getCollectionId());
+		if (coll == null) {
+			this.worldmap.set(null, null, null);
+		} else {
+			coll.NotePlayEvent(event,
+					this.worldmap.get(event.getBlock().getLocation()));
+		}
 	}
 
 	@EventHandler
 	public void onSignChangeEvent(SignChangeEvent event) {
-
+		Collection coll = this.collections.get(this.worldmap.get(
+				event.getBlock().getLocation()).getCollectionId());
+		if (coll == null) {
+			this.worldmap.set(null, null, null);
+		} else {
+			coll.SignChangeEvent(event,
+					this.worldmap.get(event.getBlock().getLocation()));
+		}
 	}
 
 	// enchantment listeners

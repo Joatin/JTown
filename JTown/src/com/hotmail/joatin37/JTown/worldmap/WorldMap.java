@@ -7,7 +7,9 @@ import java.util.Iterator;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+import com.hotmail.joatin37.JTown.Collection;
 import com.hotmail.joatin37.JTown.JTown;
+import com.hotmail.joatin37.JTown.Plot;
 
 public class WorldMap {
 
@@ -30,5 +32,9 @@ public class WorldMap {
 
 	public BlockRow get(Location loc) {
 		return this.caches.get(loc.getWorld().getName()).get(loc);
+	}
+
+	public void set(Location loc, Collection coll, Plot plot) {
+
 	}
 }

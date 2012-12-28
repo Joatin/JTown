@@ -22,4 +22,28 @@ public final class BlockRow {
 		this.maxheight = maxheight;
 		this.minheight = minheight;
 	}
+
+	public UUID getCollectionId() {
+		return this.collection;
+	}
+
+	public UUID getPlotId() {
+		return this.plot;
+	}
+
+	public int getMaxHeight() {
+		return this.maxheight;
+	}
+
+	public int getMinHeight() {
+		return this.minheight;
+	}
+
+	public int getX() {
+		return this.posx;
+	}
+
+	public int getZ() {
+		return this.posz;
+	}
 }
