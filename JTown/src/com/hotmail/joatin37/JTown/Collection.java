@@ -200,6 +200,8 @@ public abstract class Collection {
 		return this.name;
 	}
 
+	public abstract void onSave();
+
 	/*------EventListeners------*/
 
 	// All block listeners

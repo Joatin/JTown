@@ -2,14 +2,16 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="G:/bukkit mod/Vault.jar">
+	<classpathentry kind="lib" path="libs/BOSEconomy.jar"/>
+	<classpathentry kind="lib" path="libs/bukkit-1.4.6-R0.1-20121221.164310-4.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="http://mythcraft.dyndns.org/javadoc/vault/"/>
+			<attribute name="javadoc_location" value="http://jd.bukkit.org/rb/apidocs/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="G:/bukkit mod/bukkit-1.4.6-R0.1-20121221.164310-4.jar">
+	<classpathentry kind="lib" path="libs/Vault.jar"/>
+	<classpathentry kind="lib" path="libs/craftconomy3-3.0.4.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="http://jd.bukkit.org/apidocs/"/>
+			<attribute name="javadoc_location" value="http://jenkins.greatmancode.com/job/Craftconomy3/javadoc/?"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>

@@ -78,6 +78,8 @@ public class JTown extends JavaPlugin {
 	PlayerCommandHandler playercommand;
 	ServerCommandHandler servercommand;
 
+	private int amounttowns;
+
 	private GraphCollector graphcollector;
 
 	private CollectionManager cmanager;
@@ -110,6 +112,10 @@ public class JTown extends JavaPlugin {
 
 		this.getLogger().info("onDisable has been invoked!");
 
+	}
+
+	public int getAmountTowns() {
+		return this.amounttowns;
 	}
 
 }

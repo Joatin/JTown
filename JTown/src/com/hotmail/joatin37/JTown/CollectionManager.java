@@ -174,6 +174,7 @@ public final class CollectionManager implements Listener {
 
 	public CollectionManager(JTown jtown) {
 		this.jtown = jtown;
+		this.collections = new HashMap<UUID, Collection>();
 		this.worldmap = new WorldMap(this.jtown);
 		this.jtown.getServer().getPluginManager()
 				.registerEvents(this, this.jtown);

@@ -36,6 +36,8 @@ package com.hotmail.joatin37.JTown.util;
 import java.io.IOException;
 
 import com.hotmail.joatin37.JTown.JTown;
+import com.hotmail.joatin37.JTown.util.BukkitMetrics.Graph;
+import com.hotmail.joatin37.JTown.util.BukkitMetrics.Plotter;
 
 public class GraphCollector {
 
@@ -51,5 +53,22 @@ public class GraphCollector {
 		} catch (IOException e) {
 			// Failed to submit the stats :-(
 		}
+
+		Graph graph = this.metrics.createGraph("Total Amount of Towns");
+		graph.addPlotter(new TownPlotter("Towns"));
+	}
+
+	private class TownPlotter extends Plotter {
+
+		public TownPlotter(String string) {
+			super(string);
+		}
+
+		@Override
+		public int getValue() {
+			// TODO Auto-generated method stub
+			return GraphCollector.this.jtown.getAmountTowns();
+		}
+
 	}
 }

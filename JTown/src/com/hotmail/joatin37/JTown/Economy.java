@@ -33,6 +33,36 @@
 
 package com.hotmail.joatin37.JTown;
 
+import org.bukkit.plugin.Plugin;
+
+import com.greatmancode.craftconomy3.converter.converters.Craftconomy2;
+
+import cosine.boseconomy.BOSEconomy;
+
 public class Economy {
 
+	private BOSEconomy boseconomy;
+	private Craftconomy2 craftconomy;
+	private net.milkbowl.vault.economy.Economy vaulteconomy;
+
+	private JTown jtown;
+
+	public Economy(JTown town) {
+		this.jtown = town;
+	}
+
+	public void loadBOSEconomy() {
+		// Attempt to get the plugin instance for BOSEconomy.
+		Plugin temp = this.jtown.getServer().getPluginManager()
+				.getPlugin("BOSEconomy");
+
+		// Check whether BOSEconomy is loaded.
+		if (temp == null) {
+			// BOSEconomy is not loaded on the server.
+			this.jtown = null;
+		} else {
+			// BOSEconomy is now stored in the "economy" variable.
+			this.boseconomy = (BOSEconomy) temp;
+		}
+	}
 }
