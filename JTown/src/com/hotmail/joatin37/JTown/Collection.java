@@ -170,9 +170,14 @@ public abstract class Collection {
 	private UUID uuid;
 	private String name;
 	private String owner;
+	private CollectionManager manager;
 
 	public Collection() {
 
+	}
+
+	public final void setParent(CollectionManager manager) {
+		this.manager = manager;
 	}
 
 	public final String readCorrectData(UUID plotuuid, String key) {
