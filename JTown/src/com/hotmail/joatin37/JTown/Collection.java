@@ -33,9 +33,13 @@
 
 package com.hotmail.joatin37.JTown;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockBurnEvent;
@@ -164,6 +168,8 @@ import org.bukkit.event.world.PortalCreateEvent;
 import org.bukkit.event.world.StructureGrowEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.hotmail.joatin37.JTown.util.IJTown;
+import com.hotmail.joatin37.JTown.util.JUtil;
 import com.hotmail.joatin37.JTown.worldmap.BlockRow;
 
 public abstract class Collection {
@@ -171,42 +177,54 @@ public abstract class Collection {
 	private final UUID uuid;
 	private String name;
 	private String owner;
-	private final CollectionManager manager;
 	private final JavaPlugin plugin;
+	private final CollectionManager manager;
+	private final IJTown jtown;
+	private HashMap<UUID, Plot> plots;
+	private List<Player> playersinside;
 
-	public Collection(CollectionManager manager, UUID uuid, JavaPlugin plugin) {
-		this.uuid = uuid;
+	public Collection(CollectionManager manager, UUID uuid, IJTown jtown,
+			JavaPlugin plugin, FileConfiguration loadfile) {
 		this.plugin = plugin;
+		this.uuid = uuid;
+		this.jtown = jtown;
 		this.manager = manager;
+		this.name = loadfile.getString(JUtil.uuidToString(uuid) + ".name");
+		List<String> list = loadfile.getStringList(JUtil.uuidToString(uuid)
+				+ ".plots");
+		if (list == null) {
+			return;
+		}
+		Iterator<String> it = list.listIterator();
+		while (it.hasNext()) {
+			String s = it.next();
+			this.plots.put(JUtil.stringToUUID(s),
+					jtown.constructNewPlot(JUtil.getPluginFromUuidString(s),
+							JUtil.getTypeFromUuidString(s), this,
+							JUtil.stringToUUID(s)));
+		}
 	}
 
 	public abstract String getKind();
 
-	public final String readCorrectData(UUID plotuuid, String key) {
-		return this.uuid.getMostSignificantBits() + ";"
-				+ this.uuid.getLeastSignificantBits() + "."
-				+ plotuuid.getMostSignificantBits() + ";"
-				+ plotuuid.getLeastSignificantBits() + "." + key;
+	public String getPluginName() {
+		return this.plugin.getName();
 	}
 
-	public final String setCorrectData(UUID plotuuid, String key) {
-		return this.uuid.getMostSignificantBits() + ";"
-				+ this.uuid.getLeastSignificantBits() + "."
-				+ plotuuid.getMostSignificantBits() + ";"
-				+ plotuuid.getLeastSignificantBits() + "." + key;
+	public final UUID save(FileConfiguration config) {
+		config.set(JUtil.uuidToString(this.uuid) + ".kind", this.getKind());
+		config.set(JUtil.uuidToString(this.uuid) + ".owner", this.owner);
+		config.set(JUtil.uuidToString(this.uuid) + ".name", this.name);
+
+		this.onSave(config);
+		return this.uuid;
 	}
-
-	public void load(FileConfiguration loadfile) {
-
-	}
-
-	protected abstract void onLoad(FileConfiguration loadfile);
 
 	public String getName() {
 		return this.name;
 	}
 
-	public abstract void onSave();
+	public abstract void onSave(FileConfiguration config);
 
 	/*------EventListeners------*/
 

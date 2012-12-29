@@ -79,4 +79,5 @@ public final class BlockRow {
 	public int getZ() {
 		return this.posz;
 	}
+
 }

@@ -64,6 +64,13 @@ public class WorldMap {
 		}
 	}
 
+	public void save() {
+		Iterator<WorldMapCache> iterator = this.caches.values().iterator();
+		while (iterator.hasNext()) {
+			iterator.next().save();
+		}
+	}
+
 	public BlockRow get(Location loc) {
 		WorldMapCache cache = this.caches.get(loc.getWorld().getName());
 		if (cache == null) {

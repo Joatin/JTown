@@ -36,7 +36,10 @@ package com.hotmail.joatin37.JTown;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.UUID;
+import java.util.Vector;
 import java.util.logging.Level;
 
 import org.bukkit.configuration.file.FileConfiguration;
@@ -162,6 +165,7 @@ import org.bukkit.event.weather.LightningStrikeEvent;
 import org.bukkit.event.world.PortalCreateEvent;
 import org.bukkit.event.world.StructureGrowEvent;
 
+import com.hotmail.joatin37.JTown.util.JUtil;
 import com.hotmail.joatin37.JTown.worldmap.BlockRow;
 import com.hotmail.joatin37.JTown.worldmap.WorldMap;
 
@@ -188,13 +192,29 @@ public final class CollectionManager implements Listener {
 					"collections.sav");
 		}
 		this.saveconfig = YamlConfiguration.loadConfiguration(this.configfile);
+		List<String> list = this.saveconfig.getStringList("collections");
+		if (list == null) {
+			return;
+		}
+		Iterator<String> it = list.iterator();
+		while (it.hasNext()) {
+
+		}
 
 	}
 
-	private void save() {
+	public void save() {
 		if (this.saveconfig == null || this.configfile == null) {
 			return;
 		}
+		List<String> list = new Vector<String>();
+		Iterator<Collection> it = this.collections.values().iterator();
+		while (it.hasNext()) {
+			Collection coll = it.next();
+			list.add(JUtil.uuidToString(coll.save(this.saveconfig)) + ";"
+					+ coll.getPluginName() + ";" + coll.getKind());
+		}
+		this.saveconfig.set("collections", list);
 		try {
 			this.saveconfig.save(this.configfile);
 			this.jtown.getLogger().info("Succesfully saved collections.sav");
@@ -202,6 +222,7 @@ public final class CollectionManager implements Listener {
 			this.jtown.getLogger().log(Level.SEVERE,
 					"Could not save config to " + this.configfile, ex);
 		}
+		this.worldmap.save();
 	}
 
 	public void createNewCollection(Player player, String name) {

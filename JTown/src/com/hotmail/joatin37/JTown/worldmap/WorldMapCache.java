@@ -34,11 +34,15 @@
 package com.hotmail.joatin37.JTown.worldmap;
 
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +51,7 @@ import java.util.Vector;
 
 import org.bukkit.Location;
 
+import com.google.common.io.Files;
 import com.hotmail.joatin37.JTown.JTown;
 import com.hotmail.joatin37.JTown.util.ChunkPos;
 
@@ -57,9 +62,13 @@ public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	private final int VERSION = 1;
+
 	private final int MAX_ENTRIES;
 
 	private final List<ChunkPos> allchunks;
+
+	private final HashMap<ChunkPos, JChunk> dirtychunks;
 
 	private final File savefile;
 
@@ -74,7 +83,56 @@ public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
 		this.savefile = file;
 		this.jtown = jtown;
 		this.allchunks = this.loadAllReferences();
+		this.dirtychunks = new HashMap<ChunkPos, JChunk>();
 
+	}
+
+	public void save() {
+		// TODO
+		File sfile;
+		DataInputStream input;
+		DataOutputStream output;
+		try {
+			sfile = File.createTempFile("tempfile", null,
+					this.savefile.getParentFile());
+			input = new DataInputStream(new FileInputStream(this.savefile));
+			output = new DataOutputStream(new FileOutputStream("temp"));
+			input.readInt(); // reads the version int;
+			output.writeInt(this.VERSION);
+			try {
+				while (true) {
+					int size = input.readInt();
+					int a = input.readInt();
+					int b = input.readInt();
+					ChunkPos pos = ChunkPos.Wrap(a, b);
+					if (this.dirtychunks.containsKey(pos)) {
+
+					} else {
+						byte[] ba = new byte[size - 8];
+						input.read(ba);
+						output.writeInt(size);
+						output.writeInt(a);
+						output.writeInt(b);
+						output.write(ba);
+					}
+				}
+			} catch (EOFException e) {
+			}
+
+			if (this.dirtychunks.size() != 0) {
+				Iterator<JChunk> dirty = this.dirtychunks.values().iterator();
+				while (dirty.hasNext()) {
+
+				}
+			}
+			Files.copy(sfile, this.savefile);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private List<ChunkPos> loadAllReferences() {
@@ -188,4 +246,5 @@ public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
 		return null;
 
 	}
+
 }

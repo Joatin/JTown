@@ -1,6 +1,6 @@
 name: JTown
 main: com.hotmail.joatin37.JTown.JTown
-version: 1.0
+version: 1.0.0
 description: A plugin that let's you create and manage towns
 load: STARTUP 
 author: Joatin Granlund
@@ -11,6 +11,16 @@ commands:
     permission: 
     permission-message: You don't have <permission> 
   jadmin:
+    description: This is a demo command.
+    usage: /<command> arg
+    permission: 
+    permission-message: You don't have <permission> 
+  jtown:
+    description: This is a demo command.
+    usage: /<command> arg
+    permission: 
+    permission-message: You don't have <permission> 
+  plot:
     description: This is a demo command.
     usage: /<command> arg
     permission: 

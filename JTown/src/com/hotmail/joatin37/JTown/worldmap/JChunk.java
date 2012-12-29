@@ -48,6 +48,7 @@ public class JChunk {
 		this.x = x;
 		this.z = z;
 		this.blockrows = new HashMap<blockpos, BlockRow>();
+
 	}
 
 	public void put(int x, int z, BlockRow row) {
@@ -68,4 +69,5 @@ public class JChunk {
 			this.z = z;
 		}
 	}
+
 }
