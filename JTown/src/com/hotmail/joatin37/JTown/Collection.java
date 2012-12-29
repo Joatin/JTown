@@ -162,23 +162,25 @@ import org.bukkit.event.vehicle.VehicleUpdateEvent;
 import org.bukkit.event.weather.LightningStrikeEvent;
 import org.bukkit.event.world.PortalCreateEvent;
 import org.bukkit.event.world.StructureGrowEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import com.hotmail.joatin37.JTown.worldmap.BlockRow;
 
 public abstract class Collection {
 
-	private UUID uuid;
+	private final UUID uuid;
 	private String name;
 	private String owner;
-	private CollectionManager manager;
+	private final CollectionManager manager;
+	private final JavaPlugin plugin;
 
-	public Collection() {
-
-	}
-
-	public final void setParent(CollectionManager manager) {
+	public Collection(CollectionManager manager, UUID uuid, JavaPlugin plugin) {
+		this.uuid = uuid;
+		this.plugin = plugin;
 		this.manager = manager;
 	}
+
+	public abstract String getKind();
 
 	public final String readCorrectData(UUID plotuuid, String key) {
 		return this.uuid.getMostSignificantBits() + ";"
@@ -194,9 +196,8 @@ public abstract class Collection {
 				+ plotuuid.getLeastSignificantBits() + "." + key;
 	}
 
-	public void load(String uuid, FileConfiguration loadfile) {
-		this.uuid = new UUID(Long.parseLong(uuid.split(";")[0]),
-				Long.parseLong(uuid.split(";")[1]));
+	public void load(FileConfiguration loadfile) {
+
 	}
 
 	protected abstract void onLoad(FileConfiguration loadfile);

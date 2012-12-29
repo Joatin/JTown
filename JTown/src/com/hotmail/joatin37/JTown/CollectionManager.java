@@ -162,6 +162,7 @@ import org.bukkit.event.weather.LightningStrikeEvent;
 import org.bukkit.event.world.PortalCreateEvent;
 import org.bukkit.event.world.StructureGrowEvent;
 
+import com.hotmail.joatin37.JTown.worldmap.BlockRow;
 import com.hotmail.joatin37.JTown.worldmap.WorldMap;
 
 public final class CollectionManager implements Listener {
@@ -213,253 +214,315 @@ public final class CollectionManager implements Listener {
 
 	@EventHandler
 	public void onBlockBreakEvent(BlockBreakEvent event) {
-		Collection coll = this.collections.get(this.worldmap.get(
-				event.getBlock().getLocation()).getCollectionId());
+
+		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		if (row == null) {
+			return;
+		}
+		Collection coll = this.collections.get(row.getCollectionId());
 		if (coll == null) {
 			this.worldmap.set(null, null, null);
 		} else {
-			coll.BlockBreakEvent(event,
-					this.worldmap.get(event.getBlock().getLocation()));
+			coll.BlockBreakEvent(event, row);
 		}
 	}
 
 	@EventHandler
 	public void onBlockBurnEvent(BlockBurnEvent event) {
-		Collection coll = this.collections.get(this.worldmap.get(
-				event.getBlock().getLocation()).getCollectionId());
+
+		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		if (row == null) {
+			return;
+		}
+		Collection coll = this.collections.get(row.getCollectionId());
 		if (coll == null) {
 			this.worldmap.set(null, null, null);
 		} else {
-			coll.BlockBurnEvent(event,
-					this.worldmap.get(event.getBlock().getLocation()));
+			coll.BlockBurnEvent(event, row);
 		}
 	}
 
 	@EventHandler
 	public void onBlockCanBuildEvent(BlockCanBuildEvent event) {
-		Collection coll = this.collections.get(this.worldmap.get(
-				event.getBlock().getLocation()).getCollectionId());
+
+		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		if (row == null) {
+			return;
+		}
+		Collection coll = this.collections.get(row.getCollectionId());
 		if (coll == null) {
 			this.worldmap.set(null, null, null);
 		} else {
-			coll.BlockCanBuildEvent(event,
-					this.worldmap.get(event.getBlock().getLocation()));
+			coll.BlockCanBuildEvent(event, row);
 		}
 	}
 
 	@EventHandler
 	public void onBlockDamageEvent(BlockDamageEvent event) {
-		Collection coll = this.collections.get(this.worldmap.get(
-				event.getBlock().getLocation()).getCollectionId());
+
+		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		if (row == null) {
+			return;
+		}
+		Collection coll = this.collections.get(row.getCollectionId());
 		if (coll == null) {
 			this.worldmap.set(null, null, null);
 		} else {
-			coll.BlockDamageEvent(event,
-					this.worldmap.get(event.getBlock().getLocation()));
+			coll.BlockDamageEvent(event, row);
 		}
 	}
 
 	@EventHandler
 	public void onBlockDispenseEvent(BlockDispenseEvent event) {
-		Collection coll = this.collections.get(this.worldmap.get(
-				event.getBlock().getLocation()).getCollectionId());
+
+		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		if (row == null) {
+			return;
+		}
+		Collection coll = this.collections.get(row.getCollectionId());
 		if (coll == null) {
 			this.worldmap.set(null, null, null);
 		} else {
-			coll.BlockDispenseEvent(event,
-					this.worldmap.get(event.getBlock().getLocation()));
+			coll.BlockDispenseEvent(event, row);
 		}
 	}
 
 	@EventHandler
 	public void onBlockExpEvent(BlockExpEvent event) {
-		Collection coll = this.collections.get(this.worldmap.get(
-				event.getBlock().getLocation()).getCollectionId());
+
+		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		if (row == null) {
+			return;
+		}
+		Collection coll = this.collections.get(row.getCollectionId());
 		if (coll == null) {
 			this.worldmap.set(null, null, null);
 		} else {
-			coll.BlockExpEvent(event,
-					this.worldmap.get(event.getBlock().getLocation()));
+			coll.BlockExpEvent(event, row);
 		}
 	}
 
 	@EventHandler
 	public void onBlockFadeEvent(BlockFadeEvent event) {
-		Collection coll = this.collections.get(this.worldmap.get(
-				event.getBlock().getLocation()).getCollectionId());
+
+		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		if (row == null) {
+			return;
+		}
+		Collection coll = this.collections.get(row.getCollectionId());
 		if (coll == null) {
 			this.worldmap.set(null, null, null);
 		} else {
-			coll.BlockFadeEvent(event,
-					this.worldmap.get(event.getBlock().getLocation()));
+			coll.BlockFadeEvent(event, row);
 		}
 	}
 
 	@EventHandler
 	public void onBlockFormEvent(BlockFormEvent event) {
-		Collection coll = this.collections.get(this.worldmap.get(
-				event.getBlock().getLocation()).getCollectionId());
+
+		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		if (row == null) {
+			return;
+		}
+		Collection coll = this.collections.get(row.getCollectionId());
 		if (coll == null) {
 			this.worldmap.set(null, null, null);
 		} else {
-			coll.BlockFormEvent(event,
-					this.worldmap.get(event.getBlock().getLocation()));
+			coll.BlockFormEvent(event, row);
 		}
 	}
 
 	@EventHandler
 	public void onBlockFromToEvent(BlockFromToEvent event) {
-		Collection coll = this.collections.get(this.worldmap.get(
-				event.getBlock().getLocation()).getCollectionId());
+
+		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		if (row == null) {
+			return;
+		}
+		Collection coll = this.collections.get(row.getCollectionId());
 		if (coll == null) {
 			this.worldmap.set(null, null, null);
 		} else {
-			coll.BlockFromToEvent(event,
-					this.worldmap.get(event.getBlock().getLocation()));
+			coll.BlockFromToEvent(event, row);
 		}
 	}
 
 	@EventHandler
 	public void onBlockGrowEvent(BlockGrowEvent event) {
-		Collection coll = this.collections.get(this.worldmap.get(
-				event.getBlock().getLocation()).getCollectionId());
+
+		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		if (row == null) {
+			return;
+		}
+		Collection coll = this.collections.get(row.getCollectionId());
 		if (coll == null) {
 			this.worldmap.set(null, null, null);
 		} else {
-			coll.BlockGrowEvent(event,
-					this.worldmap.get(event.getBlock().getLocation()));
+			coll.BlockGrowEvent(event, row);
 		}
 	}
 
 	@EventHandler
 	public void onBlockIgniteEvent(BlockIgniteEvent event) {
-		Collection coll = this.collections.get(this.worldmap.get(
-				event.getBlock().getLocation()).getCollectionId());
+
+		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		if (row == null) {
+			return;
+		}
+		Collection coll = this.collections.get(row.getCollectionId());
 		if (coll == null) {
 			this.worldmap.set(null, null, null);
 		} else {
-			coll.BlockIgniteEvent(event,
-					this.worldmap.get(event.getBlock().getLocation()));
+			coll.BlockIgniteEvent(event, row);
 		}
 	}
 
 	@EventHandler
 	public void onBlockPhysicsEvent(BlockPhysicsEvent event) {
-		Collection coll = this.collections.get(this.worldmap.get(
-				event.getBlock().getLocation()).getCollectionId());
+		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		if (row == null) {
+			return;
+		}
+		Collection coll = this.collections.get(row.getCollectionId());
 		if (coll == null) {
 			this.worldmap.set(null, null, null);
 		} else {
-			coll.BlockPhysicsEvent(event,
-					this.worldmap.get(event.getBlock().getLocation()));
+			coll.BlockPhysicsEvent(event, row);
 		}
 	}
 
 	@EventHandler
 	public void onBlockPistonExtendEvent(BlockPistonExtendEvent event) {
-		Collection coll = this.collections.get(this.worldmap.get(
-				event.getBlock().getLocation()).getCollectionId());
+
+		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		if (row == null) {
+			return;
+		}
+		Collection coll = this.collections.get(row.getCollectionId());
 		if (coll == null) {
 			this.worldmap.set(null, null, null);
 		} else {
-			coll.BlockPistonExtendEvent(event,
-					this.worldmap.get(event.getBlock().getLocation()));
+			coll.BlockPistonExtendEvent(event, row);
 		}
 	}
 
 	@EventHandler
 	public void onBlockPistonRetractEvent(BlockPistonRetractEvent event) {
-		Collection coll = this.collections.get(this.worldmap.get(
-				event.getBlock().getLocation()).getCollectionId());
+
+		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		if (row == null) {
+			return;
+		}
+		Collection coll = this.collections.get(row.getCollectionId());
 		if (coll == null) {
 			this.worldmap.set(null, null, null);
 		} else {
-			coll.BlockPistonRetractEvent(event,
-					this.worldmap.get(event.getBlock().getLocation()));
+			coll.BlockPistonRetractEvent(event, row);
 		}
 	}
 
 	@EventHandler
 	public void onBlockPlaceEvent(BlockPlaceEvent event) {
-		Collection coll = this.collections.get(this.worldmap.get(
-				event.getBlock().getLocation()).getCollectionId());
+
+		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		if (row == null) {
+			return;
+		}
+		Collection coll = this.collections.get(row.getCollectionId());
 		if (coll == null) {
 			this.worldmap.set(null, null, null);
 		} else {
-			coll.BlockPlaceEvent(event,
-					this.worldmap.get(event.getBlock().getLocation()));
+			coll.BlockPlaceEvent(event, row);
 		}
 	}
 
 	@EventHandler
 	public void onBlockRedstoneEvent(BlockRedstoneEvent event) {
-		Collection coll = this.collections.get(this.worldmap.get(
-				event.getBlock().getLocation()).getCollectionId());
+
+		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		if (row == null) {
+			return;
+		}
+		Collection coll = this.collections.get(row.getCollectionId());
 		if (coll == null) {
 			this.worldmap.set(null, null, null);
 		} else {
-			coll.BlockRedstoneEvent(event,
-					this.worldmap.get(event.getBlock().getLocation()));
+			coll.BlockRedstoneEvent(event, row);
 		}
 	}
 
 	@EventHandler
 	public void onBlockSpreadEvent(BlockSpreadEvent event) {
-		Collection coll = this.collections.get(this.worldmap.get(
-				event.getBlock().getLocation()).getCollectionId());
+
+		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		if (row == null) {
+			return;
+		}
+		Collection coll = this.collections.get(row.getCollectionId());
 		if (coll == null) {
 			this.worldmap.set(null, null, null);
 		} else {
-			coll.BlockSpreadEvent(event,
-					this.worldmap.get(event.getBlock().getLocation()));
+			coll.BlockSpreadEvent(event, row);
 		}
 	}
 
 	@EventHandler
 	public void onEntityBlockFormEvent(EntityBlockFormEvent event) {
-		Collection coll = this.collections.get(this.worldmap.get(
-				event.getBlock().getLocation()).getCollectionId());
+
+		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		if (row == null) {
+			return;
+		}
+		Collection coll = this.collections.get(row.getCollectionId());
 		if (coll == null) {
 			this.worldmap.set(null, null, null);
 		} else {
-			coll.EntityBlockFormEvent(event,
-					this.worldmap.get(event.getBlock().getLocation()));
+			coll.EntityBlockFormEvent(event, row);
 		}
 	}
 
 	@EventHandler
 	public void onLeavesDecayEvent(LeavesDecayEvent event) {
-		Collection coll = this.collections.get(this.worldmap.get(
-				event.getBlock().getLocation()).getCollectionId());
+
+		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		if (row == null) {
+			return;
+		}
+		Collection coll = this.collections.get(row.getCollectionId());
 		if (coll == null) {
 			this.worldmap.set(null, null, null);
 		} else {
-			coll.LeavesDecayEvent(event,
-					this.worldmap.get(event.getBlock().getLocation()));
+			coll.LeavesDecayEvent(event, row);
 		}
 	}
 
 	@EventHandler
 	public void onNotePlayEvent(NotePlayEvent event) {
-		Collection coll = this.collections.get(this.worldmap.get(
-				event.getBlock().getLocation()).getCollectionId());
+
+		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		if (row == null) {
+			return;
+		}
+		Collection coll = this.collections.get(row.getCollectionId());
 		if (coll == null) {
 			this.worldmap.set(null, null, null);
 		} else {
-			coll.NotePlayEvent(event,
-					this.worldmap.get(event.getBlock().getLocation()));
+			coll.NotePlayEvent(event, row);
 		}
 	}
 
 	@EventHandler
 	public void onSignChangeEvent(SignChangeEvent event) {
-		Collection coll = this.collections.get(this.worldmap.get(
-				event.getBlock().getLocation()).getCollectionId());
+
+		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		if (row == null) {
+			return;
+		}
+		Collection coll = this.collections.get(row.getCollectionId());
 		if (coll == null) {
 			this.worldmap.set(null, null, null);
 		} else {
-			coll.SignChangeEvent(event,
-					this.worldmap.get(event.getBlock().getLocation()));
+			coll.SignChangeEvent(event, row);
 		}
 	}
 

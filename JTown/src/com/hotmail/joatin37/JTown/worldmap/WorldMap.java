@@ -55,6 +55,7 @@ public class WorldMap {
 		Iterator<World> iterator = jtown.getServer().getWorlds().iterator();
 		while (iterator.hasNext()) {
 			String w = iterator.next().getName();
+			jtown.getLogger().info(w);
 			this.caches.put(
 					w,
 					new WorldMapCache(this.jtown.getConfig().getInt(
@@ -64,7 +65,12 @@ public class WorldMap {
 	}
 
 	public BlockRow get(Location loc) {
-		return this.caches.get(loc.getWorld().getName()).get(loc);
+		WorldMapCache cache = this.caches.get(loc.getWorld().getName());
+		if (cache == null) {
+			return null;
+		} else {
+			return cache.get(loc);
+		}
 	}
 
 	public void set(Location loc, Collection coll, Plot plot) {
