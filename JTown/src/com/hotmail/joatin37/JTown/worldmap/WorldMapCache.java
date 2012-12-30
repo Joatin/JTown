@@ -52,7 +52,9 @@ import java.util.Vector;
 import org.bukkit.Location;
 
 import com.google.common.io.Files;
+import com.hotmail.joatin37.JTown.Collection;
 import com.hotmail.joatin37.JTown.JTown;
+import com.hotmail.joatin37.JTown.Plot;
 import com.hotmail.joatin37.JTown.util.ChunkPos;
 
 public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
@@ -85,6 +87,52 @@ public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
 		this.allchunks = this.loadAllReferences();
 		this.dirtychunks = new HashMap<ChunkPos, JChunk>();
 
+	}
+
+	protected void putJ(ChunkPos key, JChunk value) {
+		this.put(key, value);
+		this.dirtychunks.put(key, value);
+		if (!this.allchunks.contains(key)) {
+			this.allchunks.add(key);
+		}
+	}
+
+	public void set(Location loc, Collection coll, Plot plot, short maxheight,
+			short minheight) {
+		ChunkPos pos = ChunkPos.Wrap(loc.getChunk().getX(), loc.getChunk()
+				.getZ());
+		JChunk chunk;
+		UUID cuuid;
+		UUID plotuuid = null;
+		BlockRow row;
+		if (coll == null) {
+			row = null;
+		} else {
+			cuuid = coll.getUUID();
+			if (plot != null) {
+				plotuuid = plot.getUUID();
+			}
+			row = new BlockRow(cuuid, plotuuid, loc.getBlockX(),
+					loc.getBlockZ(), maxheight, minheight);
+		}
+		if (this.dirtychunks.containsKey(pos)) {
+			chunk = this.dirtychunks.get(pos);
+			chunk.put(loc.getBlockX(), loc.getBlockZ(), row);
+			this.putJ(pos, chunk);
+		} else {
+			chunk = super.get(loc);
+			if (chunk == null) {
+				chunk = this.getJChunk(pos);
+				if (chunk == null) {
+					chunk = new JChunk(loc.getChunk().getX(), loc.getChunk()
+							.getZ());
+				}
+			}
+			chunk.put(loc.getBlockX(), loc.getBlockZ(), row);
+			this.putJ(pos, chunk);
+		}
+		return;
+		// TODO
 	}
 
 	public void save() {
@@ -178,70 +226,68 @@ public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
 		if (this.containsKey(pos)) {
 			return super.get(pos).get(loc);
 		} else {
-			if (this.allchunks.contains(pos)) {
-				JChunk jchunk = this.loadJChunk(pos);
-				if (jchunk == null) {
-					return null;
-				} else {
-					return jchunk.get(loc);
-				}
-			} else {
+			JChunk jchunk = this.getJChunk(pos);
+			if (jchunk == null) {
 				return null;
+			} else {
+				return jchunk.get(loc);
 			}
 		}
 
 	}
 
-	private JChunk loadJChunk(ChunkPos pos) {
-		DataInputStream input;
-		try {
-			input = new DataInputStream(new FileInputStream(this.savefile));
-			input.skip(8);
+	private JChunk getJChunk(ChunkPos pos) {
+		if (this.allchunks.contains(pos)) {
+			DataInputStream input;
 			try {
-				while (true) {
-					int size = input.readInt();
-					int a = input.readInt();
-					int b = input.readInt();
-					if (a == pos.getX() && b == pos.getZ()) {
-						JChunk chunk = new JChunk(a, b);
-						for (int i = 0; i < size - 8 / BlockRow.Size; i++) {
-							long l1 = input.readLong();
-							long l2 = input.readLong();
-							long l3 = input.readLong();
-							long l4 = input.readLong();
-							int i1 = input.readInt();
-							int i2 = input.readInt();
-							int i3 = input.readInt();
-							int i4 = input.readInt();
-							UUID uuid1 = null;
-							UUID uuid2 = null;
-							if (l1 != 0 && l2 != 0) {
-								uuid1 = new UUID(l1, l2);
+				input = new DataInputStream(new FileInputStream(this.savefile));
+				input.skip(8);
+				try {
+					while (true) {
+						int size = input.readInt();
+						int a = input.readInt();
+						int b = input.readInt();
+						if (a == pos.getX() && b == pos.getZ()) {
+							JChunk chunk = new JChunk(a, b);
+							for (int i = 0; i < size - 8 / BlockRow.Size; i++) {
+								long l1 = input.readLong();
+								long l2 = input.readLong();
+								long l3 = input.readLong();
+								long l4 = input.readLong();
+								int i1 = input.readInt();
+								int i2 = input.readInt();
+								int i3 = input.readInt();
+								int i4 = input.readInt();
+								UUID uuid1 = null;
+								UUID uuid2 = null;
+								if (l1 != 0 && l2 != 0) {
+									uuid1 = new UUID(l1, l2);
+								}
+								if (l3 != 0 && l4 != 0) {
+									uuid1 = new UUID(l3, l4);
+								}
+								chunk.put(i1, 12, new BlockRow(uuid1, uuid2,
+										i1, i2, i3, i4));
 							}
-							if (l3 != 0 && l4 != 0) {
-								uuid1 = new UUID(l3, l4);
-							}
-							chunk.put(i1, 12, new BlockRow(uuid1, uuid2, i1,
-									i2, i3, i4));
+							input.close();
+							return chunk;
 						}
-						input.close();
-						return chunk;
+
+						input.skip(size - 8);
+
 					}
 
-					input.skip(size - 8);
-
+				} catch (EOFException e) {
+					input.close();
+					return null;
 				}
-
-			} catch (EOFException e) {
-				input.close();
-				return null;
+			} catch (FileNotFoundException e) {
+				this.jtown.getLogger().warning(
+						"No the file " + this.savefile + " was missing");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (FileNotFoundException e) {
-			this.jtown.getLogger().warning(
-					"No the file " + this.savefile + " was missing");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		return null;
 

@@ -33,6 +33,8 @@
 
 package com.hotmail.joatin37.JTown;
 
+import java.util.UUID;
+
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockBurnEvent;
@@ -165,9 +167,15 @@ import com.hotmail.joatin37.JTown.worldmap.BlockRow;
 public abstract class Plot {
 
 	private final Collection parent;
+	private final UUID uuid;
 
-	protected Plot(Collection parent) {
+	protected Plot(Collection parent, UUID uuid) {
 		this.parent = parent;
+		this.uuid = uuid;
+	}
+
+	public UUID getUUID() {
+		return this.uuid;
 	}
 
 	protected Collection getParent() {
