@@ -52,6 +52,7 @@ public class PlayerCommandHandler {
 			} else {
 				switch (args[0]) {
 				case "new":
+
 					break;
 
 				}

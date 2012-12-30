@@ -33,19 +33,22 @@
 
 package com.hotmail.joatin37.JTown;
 
-import java.util.HashMap;
 import java.util.UUID;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.world.WorldSaveEvent;
 
+import com.hotmail.joatin37.JTown.api.Collection;
+import com.hotmail.joatin37.JTown.api.ICore;
+import com.hotmail.joatin37.JTown.api.IJTown;
+import com.hotmail.joatin37.JTown.api.JTownExtension;
+import com.hotmail.joatin37.JTown.api.Plot;
+import com.hotmail.joatin37.JTown.core.CollectionManager;
+import com.hotmail.joatin37.JTown.core.Core;
 import com.hotmail.joatin37.JTown.util.GraphCollector;
-import com.hotmail.joatin37.JTown.util.IJTown;
-import com.hotmail.joatin37.JTown.util.JTownExtension;
 
 public class JTown extends JTownExtension implements IJTown, Listener {
 
@@ -56,18 +59,10 @@ public class JTown extends JTownExtension implements IJTown, Listener {
 
 	private GraphCollector graphcollector;
 
-	private CollectionManager cmanager;
-
-	private Economy economy;
-
-	protected HashMap<String, JTownExtension> extensions;
+	private final ICore icore;
 
 	@Override
 	public void onEnable() {
-
-		this.economy = new Economy(this);
-
-		this.cmanager = new CollectionManager(this);
 
 		this.graphcollector = new GraphCollector(this);
 
@@ -82,12 +77,7 @@ public class JTown extends JTownExtension implements IJTown, Listener {
 	}
 
 	public JTown() {
-		this.extensions = new HashMap<String, JTownExtension>();
-	}
-
-	@Override
-	public void onLoad() {
-		this.extensions.put(this.getName(), this);
+		this.icore = new Core(this);
 	}
 
 	@Override
@@ -103,53 +93,15 @@ public class JTown extends JTownExtension implements IJTown, Listener {
 	}
 
 	@Override
-	public Plot constructNewPlot(String plugin, String kind, Collection parent,
-			UUID uuid) {
-		return this.extensions.get(plugin).constructPlot(kind, parent, uuid);
-	}
-
-	@Override
-	public Collection constructNewCollection(String plugin, String kind,
-			UUID uuid) {
-		return this.extensions.get(plugin).constructCollection(kind,
-				this.cmanager, uuid, this);
-
-	}
-
-	@EventHandler
-	public void onSave(WorldSaveEvent event) {
-		this.cmanager.save();
-	}
-
-	@Override
-	public void onDisable() {
-
-		this.getLogger().info("onDisable has been invoked!");
-
-	}
-
-	public int getAmountTowns() {
-		return this.amounttowns;
-	}
-
-	@Override
-	public void add(JTownExtension extension) {
-		this.extensions.put(extension.getName(), extension);
-	}
-
-	@Override
-	public Economy getEconomy() {
-		return this.economy;
+	public ICore getICore() {
+		return this.icore;
 	}
 
 	@Override
 	public Collection constructCollection(String kind,
-			CollectionManager parent, UUID uuid, IJTown jtown) {
-		switch (kind) {
-		case "Town":
-
-			break;
-		}
+			CollectionManager parent, UUID uuid, IJTown jtown,
+			FileConfiguration config) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -158,5 +110,4 @@ public class JTown extends JTownExtension implements IJTown, Listener {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }
