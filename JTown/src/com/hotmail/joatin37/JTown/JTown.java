@@ -59,10 +59,15 @@ public class JTown extends JTownExtension implements IJTown, Listener {
 
 	private GraphCollector graphcollector;
 
-	private final ICore icore;
+	private ICore icore;
+	private Core core;
 
 	@Override
 	public void onEnable() {
+
+		this.core.init();
+
+		this.hook();
 
 		this.graphcollector = new GraphCollector(this);
 
@@ -74,10 +79,6 @@ public class JTown extends JTownExtension implements IJTown, Listener {
 
 		this.getLogger().info("JTown started");
 
-	}
-
-	public JTown() {
-		this.icore = new Core(this);
 	}
 
 	@Override
@@ -93,14 +94,19 @@ public class JTown extends JTownExtension implements IJTown, Listener {
 	}
 
 	@Override
+	public void onLoad() {
+		this.core = new Core(this);
+		this.icore = this.core;
+	}
+
+	@Override
 	public ICore getICore() {
 		return this.icore;
 	}
 
 	@Override
 	public Collection constructCollection(String kind,
-			CollectionManager parent, UUID uuid, IJTown jtown,
-			FileConfiguration config) {
+			CollectionManager parent, UUID uuid, FileConfiguration config) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -96,6 +96,7 @@ public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
 		if (!this.allchunks.contains(key)) {
 			this.allchunks.add(key);
 		}
+
 	}
 
 	public void set(Location loc, Collection coll, Plot plot, short maxheight,
@@ -116,8 +117,7 @@ public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
 			row = new BlockRow(cuuid, plotuuid, loc.getBlockX(),
 					loc.getBlockZ(), maxheight, minheight);
 		}
-		if (this.dirtychunks.containsKey(pos)) {
-			chunk = this.dirtychunks.get(pos);
+		if ((chunk = this.dirtychunks.get(pos)) != null) {
 			chunk.put(loc.getBlockX(), loc.getBlockZ(), row);
 			this.putJ(pos, chunk);
 		} else {
@@ -225,7 +225,7 @@ public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
 		ChunkPos pos = ChunkPos.Wrap(loc.getChunk().getX(), loc.getChunk()
 				.getZ());
 		if (this.containsKey(pos)) {
-			return super.get(pos).get(loc);
+			return this.get(pos).get(loc);
 		} else {
 			JChunk jchunk = this.getJChunk(pos);
 			if (jchunk == null) {
@@ -285,6 +285,7 @@ public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
 			} catch (FileNotFoundException e) {
 				this.jtown.getLogger().warning(
 						"No the file " + this.savefile + " was missing");
+				this.savefile.mkdir();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

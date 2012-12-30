@@ -51,11 +51,12 @@ public class WorldMap {
 
 	public WorldMap(JavaPlugin jtown) {
 		this.jtown = jtown;
-		this.caches = new HashMap<String, WorldMapCache>(3, 1);
+		this.caches = new HashMap<String, WorldMapCache>(3, (float) 0.75);
 		Iterator<World> iterator = jtown.getServer().getWorlds().iterator();
+		jtown.getLogger().info("Starting to load worlds");
 		while (iterator.hasNext()) {
 			String w = iterator.next().getName();
-			jtown.getLogger().info(w);
+			jtown.getLogger().info("Loading world: " + w);
 			this.caches.put(
 					w,
 					new WorldMapCache(this.jtown.getConfig().getInt(
@@ -88,7 +89,18 @@ public class WorldMap {
 	 * @since 1.0.0
 	 */
 	public boolean canSet(Location loc) {
-		return this.caches.get(loc).get(loc) == null;
+		if (loc == null) {
+			return false;
+		}
+		WorldMapCache cache = this.caches.get(loc.getWorld().getName());
+		if (cache == null) {
+			this.jtown.getLogger().info("Cache fault");
+		}
+		if (cache.get(loc) == null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**

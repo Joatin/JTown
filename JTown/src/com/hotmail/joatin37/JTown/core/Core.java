@@ -33,24 +33,67 @@
 
 package com.hotmail.joatin37.JTown.core;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
+import java.util.logging.Level;
 
-import org.bukkit.event.EventHandler;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Listener;
-import org.bukkit.event.world.WorldInitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.hotmail.joatin37.JTown.api.ICollectionManager;
 import com.hotmail.joatin37.JTown.api.ICore;
 import com.hotmail.joatin37.JTown.api.JTownExtension;
 
-public class Core implements ICore, Listener {
+public final class Core implements ICore, Listener {
 
 	private final HashMap<String, JTownExtension> extensions;
 	private final CollectionManager manager;
+	private FileConfiguration config = null;
+	private File configfile = null;
+	private final JavaPlugin plugin;
+	private boolean skipsave = false;
 
 	public Core(JavaPlugin plugin) {
+		this.plugin = plugin;
 		this.extensions = new HashMap<String, JTownExtension>();
-		this.manager = new CollectionManager(plugin);
+		this.manager = new CollectionManager(plugin, this);
+		this.reloadConfig();
+		if (this.getConfig().getBoolean("website", false)) {
+			plugin.getServer().getPluginManager().registerEvents(this, plugin);
+		}
+	}
+
+	public void sendCoreInfoMessage(String message) {
+		this.plugin.getLogger().info("[Core] " + message);
+	}
+
+	public void sendCoreWarningMessage(String message) {
+		this.plugin.getLogger().warning("[Core] " + message);
+	}
+
+	public void sendCoreSevereMessage(String message) {
+		this.plugin.getLogger().severe("[Core] " + message);
+	}
+
+	public JTownExtension getExtension(String plugin) {
+		JTownExtension ex = this.extensions.get(plugin);
+		if (ex == null && this.getConfig().getBoolean("safemode", true)) {
+			this.sendCoreSevereMessage(plugin
+					+ " was missing, its collections and/or plots couldn't be created, shuting down. If you want to continue anyway, disable \"safemode\" in the coreconfig.yml");
+			this.skipsave = true;
+			this.plugin.getServer().shutdown();
+			return null;
+		} else {
+			return ex;
+		}
+	}
+
+	public JavaPlugin getPlugin() {
+		return this.plugin;
 	}
 
 	@Override
@@ -58,9 +101,47 @@ public class Core implements ICore, Listener {
 		this.extensions.put(extension.getName(), extension);
 	}
 
-	@EventHandler
-	public void onWorldInit(WorldInitEvent event) {
+	public void init() {
 		this.manager.onInit();
 	}
 
+	public void reloadConfig() {
+		if (this.configfile == null) {
+			this.configfile = new File(this.plugin.getDataFolder(),
+					"coreconfig.yml");
+		}
+		this.config = YamlConfiguration.loadConfiguration(this.configfile);
+
+		// Look for defaults in the jar
+		InputStream defConfigStream = this.plugin.getResource("coreconfig.yml");
+		if (defConfigStream != null) {
+			YamlConfiguration defConfig = YamlConfiguration
+					.loadConfiguration(defConfigStream);
+			this.config.setDefaults(defConfig);
+		}
+	}
+
+	public FileConfiguration getConfig() {
+		if (this.config == null) {
+			this.reloadConfig();
+		}
+		return this.config;
+	}
+
+	public void saveConfig() {
+		if (this.config == null || this.configfile == null) {
+			return;
+		}
+		try {
+			this.getConfig().save(this.configfile);
+		} catch (IOException ex) {
+			this.plugin.getLogger().log(Level.SEVERE,
+					"Could not save config to " + this.configfile, ex);
+		}
+	}
+
+	@Override
+	public ICollectionManager getManager() {
+		return this.manager;
+	}
 }

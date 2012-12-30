@@ -142,6 +142,7 @@ import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerLevelChangeEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRegisterChannelEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -180,8 +181,10 @@ public final class CollectionManager implements Listener, ICollectionManager {
 	private FileConfiguration saveconfig;
 	private WorldMap worldmap;
 	private HashMap<String, Collection> players;
+	private Core core;
 
-	public CollectionManager(JavaPlugin jtown) {
+	public CollectionManager(JavaPlugin jtown, Core core) {
+		this.core = core;
 		this.jtown = jtown;
 		this.players = new HashMap<String, Collection>();
 		this.collections = new HashMap<UUID, Collection>();
@@ -192,7 +195,8 @@ public final class CollectionManager implements Listener, ICollectionManager {
 
 	private Collection reconstructCollection(String plugin, String type,
 			UUID uuid) {
-		return null;
+		return this.core.getExtension(plugin).constructCollection(type, this,
+				uuid, this.saveconfig);
 	}
 
 	@Override
@@ -211,6 +215,7 @@ public final class CollectionManager implements Listener, ICollectionManager {
 		return this.saveconfig;
 	}
 
+	@Override
 	public boolean putNewCollection(Collection coll, Location baseloc) {
 
 		List<Location> list = new Vector<Location>();
@@ -986,8 +991,41 @@ public final class CollectionManager implements Listener, ICollectionManager {
 	}
 
 	@EventHandler
-	public void onPlayerPortalEvent(PlayerMoveEvent event) {
+	public void onPlayerPortalEvent(PlayerPortalEvent event) {
 
+	}
+
+	@EventHandler
+	public void onPlayerMoveEvent(PlayerMoveEvent event) {
+
+		BlockRow row1 = this.worldmap.get(event.getFrom());
+		BlockRow row2 = this.worldmap.get(event.getTo());
+		if (row1 == null && row2 == null) {
+			return;
+		}
+		if (row1.getCollectionId() != null && row2.getCollectionId() != null) {
+			if (row1.getCollectionId().equals(row2.getCollectionId())) {
+				Collection coll = this.collections.get(row1.getCollectionId());
+				coll.PlayerMoveEvent(event, row1);
+			} else {
+				Collection coll = this.collections.get(row1.getCollectionId());
+				coll.PlayerMoveEvent(event, row1);
+
+				Collection coll2 = this.collections.get(row2.getCollectionId());
+				coll2.PlayerMoveEvent(event, row2);
+			}
+		} else {
+			if (row1.getCollectionId() != null) {
+				Collection coll = this.collections.get(row1.getCollectionId());
+				coll.PlayerMoveEvent(event, row1);
+			} else {
+				if (row2.getCollectionId() != null) {
+					Collection coll2 = this.collections.get(row2
+							.getCollectionId());
+					coll2.PlayerMoveEvent(event, row2);
+				}
+			}
+		}
 	}
 
 	@EventHandler

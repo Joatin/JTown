@@ -142,6 +142,7 @@ import org.bukkit.event.player.PlayerLevelChangeEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRegisterChannelEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -167,7 +168,6 @@ import org.bukkit.event.weather.LightningStrikeEvent;
 import org.bukkit.event.world.PortalCreateEvent;
 import org.bukkit.event.world.StructureGrowEvent;
 
-import com.hotmail.joatin37.JTown.core.CollectionManager;
 import com.hotmail.joatin37.JTown.core.JUtil;
 import com.hotmail.joatin37.JTown.core.worldmap.BlockRow;
 
@@ -178,15 +178,13 @@ public abstract class Collection {
 	private String owner;
 	private final JTownExtension plugin;
 	private final ICollectionManager manager;
-	private final IJTown jtown;
 	private HashMap<UUID, Plot> plots;
 	private HashMap<Player, Plot> playersinside;
 
-	public Collection(ICollectionManager manager, UUID uuid, IJTown jtown,
+	public Collection(ICollectionManager manager, UUID uuid,
 			JTownExtension plugin, FileConfiguration loadfile) {
 		this.plugin = plugin;
 		this.uuid = uuid;
-		this.jtown = jtown;
 		this.manager = manager;
 		this.name = loadfile.getString(JUtil.uuidToString(uuid) + ".name");
 		List<String> list = loadfile.getStringList(JUtil.uuidToString(uuid)
@@ -204,12 +202,11 @@ public abstract class Collection {
 		}
 	}
 
-	public Collection(CollectionManager manager, UUID uuid, IJTown jtown,
+	public Collection(ICollectionManager manager, UUID uuid,
 			JTownExtension plugin, String name, String owner) {
 		this.manager = manager;
 		this.plugin = plugin;
 		this.uuid = uuid;
-		this.jtown = jtown;
 		this.name = name;
 		this.owner = owner;
 	}
@@ -706,8 +703,12 @@ public abstract class Collection {
 
 	}
 
-	public final void PlayerPortalEvent(PlayerMoveEvent event, BlockRow row) {
+	public final void PlayerPortalEvent(PlayerPortalEvent event, BlockRow row) {
 
+	}
+
+	public final void PlayerMoveEvent(PlayerMoveEvent event, BlockRow row) {
+		event.getPlayer().sendMessage("§4Moving!");
 	}
 
 	public final void PlayerQuitEvent(PlayerQuitEvent event, BlockRow row) {
@@ -1242,7 +1243,7 @@ public abstract class Collection {
 
 	}
 
-	public void onPlayerPortalEvent(PlayerMoveEvent event) {
+	public void onPlayerPortalEvent(PlayerPortalEvent event) {
 
 	}
 

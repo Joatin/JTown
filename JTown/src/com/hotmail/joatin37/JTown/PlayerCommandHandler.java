@@ -33,6 +33,8 @@
 
 package com.hotmail.joatin37.JTown;
 
+import java.util.UUID;
+
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 
@@ -52,6 +54,12 @@ public class PlayerCommandHandler {
 			} else {
 				switch (args[0]) {
 				case "new":
+					player.sendMessage("You created a new collection");
+					this.jtown.getICollectionManager().putNewCollection(
+							new Town(this.jtown.getICollectionManager(),
+									UUID.randomUUID(), this.jtown,
+									"Firts coll", player.getName()),
+							player.getLocation());
 
 					break;
 

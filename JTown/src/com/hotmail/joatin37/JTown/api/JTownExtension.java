@@ -10,24 +10,22 @@ import com.hotmail.joatin37.JTown.core.CollectionManager;
 public abstract class JTownExtension extends JavaPlugin {
 
 	private IJTown jtown;
+	private ICollectionManager icollectionmanager;
+	private ICore core;
 
 	protected final void hook() {
-		((IJTown) this.getServer().getPluginManager().getPlugin("JTown"))
-				.getICore().add(this);
-	}
-
-	@Override
-	public void onLoad() {
-		this.hook();
-	}
-
-	public Collection constructNewCollection() {
-		return null;
+		this.core = ((IJTown) this.getServer().getPluginManager()
+				.getPlugin("JTown")).getICore();
+		this.core.add(this);
+		this.icollectionmanager = this.core.getManager();
 	}
 
 	public abstract Collection constructCollection(String kind,
-			CollectionManager parent, UUID uuid, IJTown jtown,
-			FileConfiguration config);
+			CollectionManager parent, UUID uuid, FileConfiguration config);
 
 	public abstract Plot constructPlot(String kind, Collection parent, UUID uuid);
+
+	public ICollectionManager getICollectionManager() {
+		return this.icollectionmanager;
+	}
 }

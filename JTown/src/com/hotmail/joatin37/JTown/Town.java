@@ -5,21 +5,20 @@ import java.util.UUID;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import com.hotmail.joatin37.JTown.api.Collection;
-import com.hotmail.joatin37.JTown.api.IJTown;
+import com.hotmail.joatin37.JTown.api.ICollectionManager;
 import com.hotmail.joatin37.JTown.api.JTownExtension;
-import com.hotmail.joatin37.JTown.core.CollectionManager;
 
 public class Town extends Collection {
 
-	public Town(CollectionManager manager, UUID uuid, IJTown jtown,
-			JTownExtension plugin, FileConfiguration loadfile) {
-		super(manager, uuid, jtown, plugin, loadfile);
+	public Town(ICollectionManager manager, UUID uuid, JTownExtension plugin,
+			FileConfiguration loadfile) {
+		super(manager, uuid, plugin, loadfile);
 		// TODO Auto-generated constructor stub
 	}
 
-	public Town(CollectionManager manager, UUID uuid, IJTown jtown,
-			JTownExtension plugin, String name, String owner) {
-		super(manager, uuid, jtown, plugin, name, owner);
+	public Town(ICollectionManager manager, UUID uuid, JTownExtension plugin,
+			String name, String owner) {
+		super(manager, uuid, plugin, name, owner);
 		// TODO Auto-generated constructor stub
 	}
 
