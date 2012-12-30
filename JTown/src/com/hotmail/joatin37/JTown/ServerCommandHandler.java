@@ -38,6 +38,12 @@ import org.bukkit.command.CommandSender;
 
 public class ServerCommandHandler {
 
+	private final JTown jtown;
+
+	public ServerCommandHandler(JTown jtown) {
+		this.jtown = jtown;
+	}
+
 	public void onCommand(CommandSender sender, Command cmd, String label,
 			String[] args) {
 		// TODO Auto-generated method stub

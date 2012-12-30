@@ -71,6 +71,10 @@ public class JTown extends JTownExtension implements IJTown, Listener {
 
 		this.graphcollector = new GraphCollector(this);
 
+		this.playercommand = new PlayerCommandHandler(this);
+
+		this.servercommand = new ServerCommandHandler(this);
+
 		this.getServer().getPluginManager().registerEvents(this, this);
 
 		this.getLogger().info("JTown started");
@@ -141,7 +145,11 @@ public class JTown extends JTownExtension implements IJTown, Listener {
 	@Override
 	public Collection constructCollection(String kind,
 			CollectionManager parent, UUID uuid, IJTown jtown) {
-		// TODO Auto-generated method stub
+		switch (kind) {
+		case "Town":
+
+			break;
+		}
 		return null;
 	}
 

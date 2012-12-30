@@ -38,6 +38,12 @@ import org.bukkit.entity.Player;
 
 public class PlayerCommandHandler {
 
+	private final JTown jtown;
+
+	public PlayerCommandHandler(JTown jtown) {
+		this.jtown = jtown;
+	}
+
 	public void onCommand(Player player, Command cmd, String label,
 			String[] args) {
 		if (cmd.getName().equalsIgnoreCase("town")) {
@@ -46,6 +52,8 @@ public class PlayerCommandHandler {
 			} else {
 				switch (args[0]) {
 				case "new":
+					break;
+
 				}
 			}
 		}

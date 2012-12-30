@@ -80,20 +80,61 @@ public class WorldMap {
 		}
 	}
 
+	/**
+	 * Used to see if a collection can be set at that loaction.
+	 * 
+	 * @param loc
+	 * @return if the location can be set.
+	 * @since 1.0.0
+	 */
 	public boolean canSet(Location loc) {
-		return false;
-		// TODO
+		return this.caches.get(loc).get(loc) == null;
 	}
 
+	/**
+	 * Used to see if a plot can be set at that location.
+	 * 
+	 * @param loc
+	 * @param coll
+	 * @return if a plot can be set there.
+	 * @since 1.0.0
+	 */
 	public boolean canSet(Location loc, Collection coll) {
 		return false;
 		// TODO
 	}
 
+	/**
+	 * Sets the data for that location. This method will overwrite all previous
+	 * data! This method is equal to set(Location loc, Collection coll, Plot
+	 * plot, short -1, short -1)
+	 * 
+	 * @param loc
+	 *            The loaction to put the data.
+	 * @param coll
+	 *            The collection to set. If collection is null, then the data
+	 *            will be deleted.
+	 * @param plot
+	 *            the plot to set. This may be null.
+	 * @since 1.0.0
+	 */
 	public void set(Location loc, Collection coll, Plot plot) {
 		this.set(loc, coll, plot, (short) -1, (short) -1);
 	}
 
+	/**
+	 * Sets the data for that location. This method will overwrite all previous
+	 * data!
+	 * 
+	 * @param loc
+	 *            The loaction to put the data.
+	 * @param coll
+	 *            The collection to set. If collection is null, then the data
+	 *            will be deleted.
+	 * @param plot
+	 *            the plot to set. This may be null.
+	 * @since 1.0.0
+	 */
 	public void set(Location loc, Collection coll, Plot plot, short maxheight,
 			short minheight) {
 		this.caches.get(loc.getWorld().getName()).set(loc, coll, plot,

@@ -166,9 +166,9 @@ import org.bukkit.event.vehicle.VehicleUpdateEvent;
 import org.bukkit.event.weather.LightningStrikeEvent;
 import org.bukkit.event.world.PortalCreateEvent;
 import org.bukkit.event.world.StructureGrowEvent;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import com.hotmail.joatin37.JTown.util.IJTown;
+import com.hotmail.joatin37.JTown.util.JTownExtension;
 import com.hotmail.joatin37.JTown.util.JUtil;
 import com.hotmail.joatin37.JTown.worldmap.BlockRow;
 
@@ -177,14 +177,14 @@ public abstract class Collection {
 	private final UUID uuid;
 	private String name;
 	private String owner;
-	private final JavaPlugin plugin;
+	private final JTownExtension plugin;
 	private final CollectionManager manager;
 	private final IJTown jtown;
 	private HashMap<UUID, Plot> plots;
-	private List<Player> playersinside;
+	private HashMap<Player, Plot> playersinside;
 
 	public Collection(CollectionManager manager, UUID uuid, IJTown jtown,
-			JavaPlugin plugin, FileConfiguration loadfile) {
+			JTownExtension plugin, FileConfiguration loadfile) {
 		this.plugin = plugin;
 		this.uuid = uuid;
 		this.jtown = jtown;
@@ -203,6 +203,16 @@ public abstract class Collection {
 							JUtil.getTypeFromUuidString(s), this,
 							JUtil.stringToUUID(s)));
 		}
+	}
+
+	public Collection(CollectionManager manager, UUID uuid, IJTown jtown,
+			JTownExtension plugin, String name, String owner) {
+		this.manager = manager;
+		this.plugin = plugin;
+		this.uuid = uuid;
+		this.jtown = jtown;
+		this.name = name;
+		this.owner = owner;
 	}
 
 	public final UUID getUUID() {
@@ -232,7 +242,7 @@ public abstract class Collection {
 
 	/*------Custom events------*/
 
-	public void PlayerEntered(Player player, BlockRow row) {
+	public void PlayerEntered(Player player, BlockRow row, PlayerMoveEvent event) {
 
 	}
 

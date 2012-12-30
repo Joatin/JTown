@@ -944,7 +944,7 @@ public final class CollectionManager implements Listener {
 			coll = null;
 		} else {
 			coll = this.collections.get(row.getCollectionId());
-			coll.PlayerEntered(event.getPlayer(), row);
+			coll.PlayerEntered(event.getPlayer(), row, null);
 		}
 		this.players.put(event.getPlayer().getName(), coll);
 	}

@@ -1,4 +1,2 @@
-world:
-  allowpvp: OPTIONAL
-  wilderness:
-    allowpvp: FALSE
+website: False
+towns: True
