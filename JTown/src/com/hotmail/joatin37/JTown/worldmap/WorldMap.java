@@ -80,7 +80,23 @@ public class WorldMap {
 		}
 	}
 
-	public void set(Location loc, Collection coll, Plot plot) {
+	public boolean canSet(Location loc) {
+		return false;
+		// TODO
+	}
 
+	public boolean canSet(Location loc, Collection coll) {
+		return false;
+		// TODO
+	}
+
+	public boolean set(Location loc, Collection coll, Plot plot) {
+		return this.set(loc, coll, plot, (short) -1, (short) -1);
+	}
+
+	public boolean set(Location loc, Collection coll, Plot plot,
+			short maxheight, short minheight) {
+		return false;
+		// TODO
 	}
 }

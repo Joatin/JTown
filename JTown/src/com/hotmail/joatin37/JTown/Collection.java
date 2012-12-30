@@ -205,6 +205,10 @@ public abstract class Collection {
 		}
 	}
 
+	public final UUID getUUID() {
+		return this.uuid;
+	}
+
 	public abstract String getKind();
 
 	public String getPluginName() {
@@ -225,6 +229,12 @@ public abstract class Collection {
 	}
 
 	public abstract void onSave(FileConfiguration config);
+
+	/*------Custom events------*/
+
+	public void PlayerEntered(Player player, BlockRow row) {
+
+	}
 
 	/*------EventListeners------*/
 

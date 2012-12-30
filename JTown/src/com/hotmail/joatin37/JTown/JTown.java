@@ -52,7 +52,7 @@ public class JTown extends JTownExtension implements IJTown, Listener {
 	PlayerCommandHandler playercommand;
 	ServerCommandHandler servercommand;
 
-	private int amounttowns;
+	private int amounttowns = 1;
 
 	private GraphCollector graphcollector;
 

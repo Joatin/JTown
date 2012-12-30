@@ -42,6 +42,7 @@ import java.util.UUID;
 import java.util.Vector;
 import java.util.logging.Level;
 
+import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -139,7 +140,6 @@ import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerLevelChangeEvent;
-import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -176,14 +176,46 @@ public final class CollectionManager implements Listener {
 	private File configfile;
 	private FileConfiguration saveconfig;
 	private WorldMap worldmap;
+	private HashMap<String, Collection> players;
 
 	public CollectionManager(JTown jtown) {
 		this.jtown = jtown;
+		this.players = new HashMap<String, Collection>();
 		this.collections = new HashMap<UUID, Collection>();
 		this.worldmap = new WorldMap(this.jtown);
 		this.jtown.getServer().getPluginManager()
 				.registerEvents(this, this.jtown);
 
+		this.load();
+
+	}
+
+	public boolean putNewCollection(Collection coll, Location baseloc) {
+
+		List<Location> list = new Vector<Location>();
+		int x = baseloc.getBlockX();
+		int z = baseloc.getBlockZ();
+		list.add(new Location(baseloc.getWorld(), x - 1, 0, z - 1));
+		list.add(new Location(baseloc.getWorld(), x - 1, 0, z));
+		list.add(new Location(baseloc.getWorld(), x - 1, 0, z + 1));
+		list.add(new Location(baseloc.getWorld(), x, 0, z - 1));
+		list.add(new Location(baseloc.getWorld(), x, 0, z));
+		list.add(new Location(baseloc.getWorld(), x, 0, z + 1));
+		list.add(new Location(baseloc.getWorld(), x + 1, 0, z - 1));
+		list.add(new Location(baseloc.getWorld(), x + 1, 0, z));
+		list.add(new Location(baseloc.getWorld(), x + 1, 0, z + 1));
+		Iterator<Location> it = list.iterator();
+		while (it.hasNext()) {
+			if (!this.worldmap.canSet(it.next())) {
+				return false;
+			}
+		}
+		Iterator<Location> it2 = list.iterator();
+		this.collections.put(coll.getUUID(), coll);
+		while (it2.hasNext()) {
+			this.worldmap.set(it2.next(), coll, null);
+		}
+		return true;
 	}
 
 	private void load() {
@@ -198,7 +230,12 @@ public final class CollectionManager implements Listener {
 		}
 		Iterator<String> it = list.iterator();
 		while (it.hasNext()) {
-
+			String s = it.next();
+			Collection coll = this.jtown.constructNewCollection(
+					JUtil.getPluginFromUuidString(s),
+					JUtil.getTypeFromUuidString(s), JUtil.stringToUUID(s));
+			this.collections.put(JUtil.stringToUUID(s), coll);
+			// TODO if(coll instanceof town)
 		}
 
 	}
@@ -901,7 +938,15 @@ public final class CollectionManager implements Listener {
 
 	@EventHandler
 	public void onPlayerJoinEvent(PlayerJoinEvent event) {
-
+		Collection coll;
+		BlockRow row = this.worldmap.get(event.getPlayer().getLocation());
+		if (row == null) {
+			coll = null;
+		} else {
+			coll = this.collections.get(row.getCollectionId());
+			coll.PlayerEntered(event.getPlayer(), row);
+		}
+		this.players.put(event.getPlayer().getName(), coll);
 	}
 
 	@EventHandler
@@ -911,11 +956,6 @@ public final class CollectionManager implements Listener {
 
 	@EventHandler
 	public void onPlayerLevelChangeEvent(PlayerLevelChangeEvent event) {
-
-	}
-
-	@EventHandler
-	public void onPlayerLoginEvent(PlayerLoginEvent event) {
 
 	}
 
