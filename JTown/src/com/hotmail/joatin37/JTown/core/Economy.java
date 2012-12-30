@@ -31,15 +31,17 @@
  * either expressed or implied, of anybody else.
  */
 
-package com.hotmail.joatin37.JTown;
+package com.hotmail.joatin37.JTown.core;
 
 import org.bukkit.plugin.Plugin;
 
 import com.greatmancode.craftconomy3.converter.converters.Craftconomy2;
+import com.hotmail.joatin37.JTown.JTown;
+import com.hotmail.joatin37.JTown.api.IEconomy;
 
 import cosine.boseconomy.BOSEconomy;
 
-public class Economy {
+public class Economy implements IEconomy {
 
 	private BOSEconomy boseconomy;
 	private Craftconomy2 craftconomy;

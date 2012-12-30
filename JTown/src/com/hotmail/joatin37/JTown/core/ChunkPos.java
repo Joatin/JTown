@@ -31,7 +31,7 @@
  * either expressed or implied, of anybody else.
  */
 
-package com.hotmail.joatin37.JTown.util;
+package com.hotmail.joatin37.JTown.core;
 
 public class ChunkPos {
 

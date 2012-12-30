@@ -31,7 +31,7 @@
  * either expressed or implied, of anybody else.
  */
 
-package com.hotmail.joatin37.JTown.worldmap;
+package com.hotmail.joatin37.JTown.core.worldmap;
 
 import java.util.UUID;
 

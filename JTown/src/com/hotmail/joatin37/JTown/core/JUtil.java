@@ -1,4 +1,4 @@
-package com.hotmail.joatin37.JTown.util;
+package com.hotmail.joatin37.JTown.core;
 
 import java.util.UUID;
 

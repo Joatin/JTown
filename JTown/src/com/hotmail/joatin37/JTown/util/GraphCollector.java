@@ -67,7 +67,7 @@ public class GraphCollector {
 		@Override
 		public int getValue() {
 			// TODO Auto-generated method stub
-			return GraphCollector.this.jtown.getAmountTowns();
+			return 1;
 		}
 
 	}

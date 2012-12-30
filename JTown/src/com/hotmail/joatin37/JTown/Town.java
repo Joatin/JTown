@@ -4,8 +4,10 @@ import java.util.UUID;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
-import com.hotmail.joatin37.JTown.util.IJTown;
-import com.hotmail.joatin37.JTown.util.JTownExtension;
+import com.hotmail.joatin37.JTown.api.Collection;
+import com.hotmail.joatin37.JTown.api.IJTown;
+import com.hotmail.joatin37.JTown.api.JTownExtension;
+import com.hotmail.joatin37.JTown.core.CollectionManager;
 
 public class Town extends Collection {
 

@@ -31,7 +31,7 @@
  * either expressed or implied, of anybody else.
  */
 
-package com.hotmail.joatin37.JTown;
+package com.hotmail.joatin37.JTown.api;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -167,10 +167,9 @@ import org.bukkit.event.weather.LightningStrikeEvent;
 import org.bukkit.event.world.PortalCreateEvent;
 import org.bukkit.event.world.StructureGrowEvent;
 
-import com.hotmail.joatin37.JTown.util.IJTown;
-import com.hotmail.joatin37.JTown.util.JTownExtension;
-import com.hotmail.joatin37.JTown.util.JUtil;
-import com.hotmail.joatin37.JTown.worldmap.BlockRow;
+import com.hotmail.joatin37.JTown.core.CollectionManager;
+import com.hotmail.joatin37.JTown.core.JUtil;
+import com.hotmail.joatin37.JTown.core.worldmap.BlockRow;
 
 public abstract class Collection {
 
@@ -178,12 +177,12 @@ public abstract class Collection {
 	private String name;
 	private String owner;
 	private final JTownExtension plugin;
-	private final CollectionManager manager;
+	private final ICollectionManager manager;
 	private final IJTown jtown;
 	private HashMap<UUID, Plot> plots;
 	private HashMap<Player, Plot> playersinside;
 
-	public Collection(CollectionManager manager, UUID uuid, IJTown jtown,
+	public Collection(ICollectionManager manager, UUID uuid, IJTown jtown,
 			JTownExtension plugin, FileConfiguration loadfile) {
 		this.plugin = plugin;
 		this.uuid = uuid;
@@ -199,7 +198,7 @@ public abstract class Collection {
 		while (it.hasNext()) {
 			String s = it.next();
 			this.plots.put(JUtil.stringToUUID(s),
-					jtown.constructNewPlot(JUtil.getPluginFromUuidString(s),
+					manager.reconstructPlot(JUtil.getPluginFromUuidString(s),
 							JUtil.getTypeFromUuidString(s), this,
 							JUtil.stringToUUID(s)));
 		}

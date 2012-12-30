@@ -31,7 +31,7 @@
  * either expressed or implied, of anybody else.
  */
 
-package com.hotmail.joatin37.JTown.worldmap;
+package com.hotmail.joatin37.JTown.core.worldmap;
 
 import java.io.File;
 import java.util.HashMap;
@@ -39,17 +39,17 @@ import java.util.Iterator;
 
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.plugin.java.JavaPlugin;
 
-import com.hotmail.joatin37.JTown.Collection;
-import com.hotmail.joatin37.JTown.JTown;
-import com.hotmail.joatin37.JTown.Plot;
+import com.hotmail.joatin37.JTown.api.Collection;
+import com.hotmail.joatin37.JTown.api.Plot;
 
 public class WorldMap {
 
 	private HashMap<String, WorldMapCache> caches;
-	private final JTown jtown;
+	private final JavaPlugin jtown;
 
-	public WorldMap(JTown jtown) {
+	public WorldMap(JavaPlugin jtown) {
 		this.jtown = jtown;
 		this.caches = new HashMap<String, WorldMapCache>(3, 1);
 		Iterator<World> iterator = jtown.getServer().getWorlds().iterator();

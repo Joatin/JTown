@@ -31,7 +31,7 @@
  * either expressed or implied, of anybody else.
  */
 
-package com.hotmail.joatin37.JTown.worldmap;
+package com.hotmail.joatin37.JTown.core.worldmap;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -50,12 +50,12 @@ import java.util.UUID;
 import java.util.Vector;
 
 import org.bukkit.Location;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import com.google.common.io.Files;
-import com.hotmail.joatin37.JTown.Collection;
-import com.hotmail.joatin37.JTown.JTown;
-import com.hotmail.joatin37.JTown.Plot;
-import com.hotmail.joatin37.JTown.util.ChunkPos;
+import com.hotmail.joatin37.JTown.api.Collection;
+import com.hotmail.joatin37.JTown.api.Plot;
+import com.hotmail.joatin37.JTown.core.ChunkPos;
 
 public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
 
@@ -74,11 +74,12 @@ public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
 
 	private final File savefile;
 
-	private final JTown jtown;
+	private final JavaPlugin jtown;
 
 	private final String world;
 
-	public WorldMapCache(int maxcapacity, File file, JTown jtown, String world) {
+	public WorldMapCache(int maxcapacity, File file, JavaPlugin jtown,
+			String world) {
 		super(maxcapacity, 0.75f, true);
 		this.world = world;
 		this.MAX_ENTRIES = maxcapacity;

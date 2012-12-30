@@ -31,7 +31,7 @@
  * either expressed or implied, of anybody else.
  */
 
-package com.hotmail.joatin37.JTown;
+package com.hotmail.joatin37.JTown.api;
 
 import java.util.UUID;
 
@@ -162,7 +162,7 @@ import org.bukkit.event.weather.LightningStrikeEvent;
 import org.bukkit.event.world.PortalCreateEvent;
 import org.bukkit.event.world.StructureGrowEvent;
 
-import com.hotmail.joatin37.JTown.worldmap.BlockRow;
+import com.hotmail.joatin37.JTown.core.worldmap.BlockRow;
 
 public abstract class Plot {
 

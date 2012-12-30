@@ -31,7 +31,7 @@
  * either expressed or implied, of anybody else.
  */
 
-package com.hotmail.joatin37.JTown;
+package com.hotmail.joatin37.JTown.core;
 
 import java.io.File;
 import java.io.IOException;
@@ -164,30 +164,51 @@ import org.bukkit.event.vehicle.VehicleUpdateEvent;
 import org.bukkit.event.weather.LightningStrikeEvent;
 import org.bukkit.event.world.PortalCreateEvent;
 import org.bukkit.event.world.StructureGrowEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 
-import com.hotmail.joatin37.JTown.util.JUtil;
-import com.hotmail.joatin37.JTown.worldmap.BlockRow;
-import com.hotmail.joatin37.JTown.worldmap.WorldMap;
+import com.hotmail.joatin37.JTown.api.Collection;
+import com.hotmail.joatin37.JTown.api.ICollectionManager;
+import com.hotmail.joatin37.JTown.api.Plot;
+import com.hotmail.joatin37.JTown.core.worldmap.BlockRow;
+import com.hotmail.joatin37.JTown.core.worldmap.WorldMap;
 
-public final class CollectionManager implements Listener {
+public final class CollectionManager implements Listener, ICollectionManager {
 
 	private HashMap<UUID, Collection> collections;
-	private final JTown jtown;
+	private final JavaPlugin jtown;
 	private File configfile;
 	private FileConfiguration saveconfig;
 	private WorldMap worldmap;
 	private HashMap<String, Collection> players;
 
-	public CollectionManager(JTown jtown) {
+	public CollectionManager(JavaPlugin jtown) {
 		this.jtown = jtown;
 		this.players = new HashMap<String, Collection>();
 		this.collections = new HashMap<UUID, Collection>();
-		this.worldmap = new WorldMap(this.jtown);
-		this.jtown.getServer().getPluginManager()
-				.registerEvents(this, this.jtown);
 
 		this.load();
 
+	}
+
+	private Collection reconstructCollection(String plugin, String type,
+			UUID uuid) {
+		return null;
+	}
+
+	@Override
+	public Plot reconstructPlot(String plugin, String type, Collection parent,
+			UUID uuid) {
+		return null;
+	}
+
+	protected void onInit() {
+		this.worldmap = new WorldMap(this.jtown);
+		this.jtown.getServer().getPluginManager()
+				.registerEvents(this, this.jtown);
+	}
+
+	public FileConfiguration getConfig() {
+		return this.saveconfig;
 	}
 
 	public boolean putNewCollection(Collection coll, Location baseloc) {
@@ -231,7 +252,7 @@ public final class CollectionManager implements Listener {
 		Iterator<String> it = list.iterator();
 		while (it.hasNext()) {
 			String s = it.next();
-			Collection coll = this.jtown.constructNewCollection(
+			Collection coll = this.reconstructCollection(
 					JUtil.getPluginFromUuidString(s),
 					JUtil.getTypeFromUuidString(s), JUtil.stringToUUID(s));
 			this.collections.put(JUtil.stringToUUID(s), coll);

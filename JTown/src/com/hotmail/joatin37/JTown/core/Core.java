@@ -31,43 +31,36 @@
  * either expressed or implied, of anybody else.
  */
 
-package com.hotmail.joatin37.JTown.core.worldmap;
+package com.hotmail.joatin37.JTown.core;
 
 import java.util.HashMap;
 
-import org.bukkit.Location;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.world.WorldInitEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 
-public class JChunk {
+import com.hotmail.joatin37.JTown.api.ICore;
+import com.hotmail.joatin37.JTown.api.JTownExtension;
 
-	private final int x;
-	private final int z;
+public class Core implements ICore, Listener {
 
-	private HashMap<blockpos, BlockRow> blockrows;
+	private final HashMap<String, JTownExtension> extensions;
+	private final CollectionManager manager;
 
-	public JChunk(int x, int z) {
-		this.x = x;
-		this.z = z;
-		this.blockrows = new HashMap<blockpos, BlockRow>();
-
+	public Core(JavaPlugin plugin) {
+		this.extensions = new HashMap<String, JTownExtension>();
+		this.manager = new CollectionManager(plugin);
 	}
 
-	public void put(int x, int z, BlockRow row) {
-		this.blockrows.put(new blockpos(x, z), row);
+	@Override
+	public void add(JTownExtension extension) {
+		this.extensions.put(extension.getName(), extension);
 	}
 
-	public BlockRow get(Location loc) {
-		return this.blockrows
-				.get(new blockpos(loc.getBlockX(), loc.getBlockZ()));
-	}
-
-	public class blockpos {
-		public final int x;
-		public final int z;
-
-		public blockpos(int x, int z) {
-			this.x = x;
-			this.z = z;
-		}
+	@EventHandler
+	public void onWorldInit(WorldInitEvent event) {
+		this.manager.onInit();
 	}
 
 }
