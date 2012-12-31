@@ -67,8 +67,6 @@ public class JTown extends JTownExtension implements IJTown, Listener {
 
 		this.core.init();
 
-		this.hook();
-
 		this.graphcollector = new GraphCollector(this);
 
 		this.playercommand = new PlayerCommandHandler(this);
@@ -98,10 +96,14 @@ public class JTown extends JTownExtension implements IJTown, Listener {
 
 	}
 
-	@Override
-	public void onLoad() {
+	public JTown() {
 		this.core = new Core(this);
 		this.icore = this.core;
+	}
+
+	@Override
+	public void onLoad() {
+		this.hook();
 	}
 
 	@Override
@@ -112,8 +114,9 @@ public class JTown extends JTownExtension implements IJTown, Listener {
 	@Override
 	public Collection constructCollection(String kind,
 			CollectionManager parent, UUID uuid, FileConfiguration config) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return new Town(parent, uuid, this, config);
+
 	}
 
 	@Override
