@@ -1,4 +1,6 @@
 Messages:
-E1: 
+M1: 
 
 Exceptions:
+//This exception may be used to notify both server and player, if the language they tried to change to was invalid.
+E1: §4Invalid language tag!
