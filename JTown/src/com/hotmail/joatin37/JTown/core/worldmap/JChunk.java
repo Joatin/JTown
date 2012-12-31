@@ -33,79 +33,148 @@
 
 package com.hotmail.joatin37.JTown.core.worldmap;
 
+import java.nio.ByteBuffer;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.UUID;
 
 import org.bukkit.Location;
 
-public class JChunk {
+import com.hotmail.joatin37.JTown.api.ICollectionManager;
+
+public class JChunk extends HashMap<BlockPos, BlockRow1> {
 
 	private final int x;
 	private final int z;
+	private final ICollectionManager manager;
 
-	private HashMap<blockpos, BlockRow> blockrows;
-
-	public JChunk(int x, int z) {
+	public JChunk(int x, int z, ICollectionManager manager) {
 		this.x = x;
 		this.z = z;
-		this.blockrows = new HashMap<blockpos, BlockRow>();
+		this.manager = manager;
 
 	}
 
-	public void put(int x, int z, BlockRow row) {
-		this.blockrows.put(new blockpos(x, z), row);
+	public BlockRow1 remove(BlockPos pos) {
+		BlockRow1 row = this.get(pos);
+		if (row.getCollectionId() != null) {
+			this.manager.getCollection(row.getCollectionId()).removeLandMass();
+			if (row.getPlotId() != null) {
+				this.manager.getCollection(row.getCollectionId())
+						.getPlot(row.getPlotId()).removeLandMass();
+			}
+		}
+		return super.remove(pos);
+
 	}
 
-	public BlockRow get(Location loc) {
-		return this.blockrows
-				.get(new blockpos(loc.getBlockX(), loc.getBlockZ()));
-	}
-
-	public class blockpos {
-		@Override
-		public int hashCode() {
-			final int prime = 31;
-			int result = 1;
-			result = prime * result + this.getOuterType().hashCode();
-			result = prime * result + this.x;
-			result = prime * result + this.z;
-			return result;
+	@Override
+	public BlockRow1 put(BlockPos pos, BlockRow1 row) {
+		if (this.containsKey(pos)) {
+			this.remove(pos);
+		}
+		if (row.getCollectionId() != null) {
+			this.manager.getCollection(row.getCollectionId()).addLandMass();
+			if (row.getPlotId() != null) {
+				this.manager.getCollection(row.getCollectionId())
+						.getPlot(row.getPlotId()).addLandMass();
+			}
 		}
 
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj) {
-				return true;
+		super.put(pos, row);
+		return row;
+
+	}
+
+	public void put(int x, int z, BlockRow1 row) {
+		this.put(new BlockPos(x, z), row);
+	}
+
+	public BlockRow1 get(Location loc) {
+		return this.get(new BlockPos(loc.getBlockX(), loc.getBlockZ()));
+	}
+
+	public void reconstructFromBytes(int VERSION, byte[] bytes) {
+		if (VERSION == 1) {
+			ByteBuffer buff = ByteBuffer.wrap(bytes);
+			for (int i = 0; i < buff.capacity() / BlockRow1.Size; i++) {
+				long c1 = buff.getLong();
+				long c2 = buff.getLong();
+				long p1 = buff.getLong();
+				long p2 = buff.getLong();
+				if (c1 == 0 && c2 == 0) {
+					continue;
+				}
+				UUID collection = new UUID(c1, c2);
+				this.manager.getCollection(collection).addLandMass();
+				UUID plot = null;
+				if (p1 != 0 && p2 != 0) {
+					plot = new UUID(p1, p2);
+					this.manager.getCollection(collection).getPlot(plot)
+							.addLandMass();
+				}
+
+				int x = buff.getInt();
+				int z = buff.getInt();
+				short max = buff.getShort();
+				short min = buff.getShort();
+				this.put(new BlockPos(x, z), new BlockRow1(collection, plot, x,
+						z, max, min));
 			}
-			if (obj == null) {
-				return false;
-			}
-			if (!(obj instanceof blockpos)) {
-				return false;
-			}
-			blockpos other = (blockpos) obj;
-			if (!this.getOuterType().equals(other.getOuterType())) {
-				return false;
-			}
-			if (this.x != other.x) {
-				return false;
-			}
-			if (this.z != other.z) {
-				return false;
-			}
+		}
+	}
+
+	public byte[] getBytes() {
+		ByteBuffer buff = ByteBuffer
+				.wrap(new byte[(this.size() * BlockRow1.Size) + 8]);
+		buff.putInt(this.x);
+		buff.putInt(this.z);
+		Iterator<BlockRow1> it = this.values().iterator();
+		while (it.hasNext()) {
+			buff.put(it.next().getBytes());
+		}
+		return buff.array();
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + this.x;
+		result = prime * result + this.z;
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
 			return true;
 		}
-
-		public final int x;
-		public final int z;
-
-		public blockpos(int x, int z) {
-			this.x = x;
-			this.z = z;
+		if (!super.equals(obj)) {
+			return false;
 		}
-
-		private JChunk getOuterType() {
-			return JChunk.this;
+		if (!(obj instanceof JChunk)) {
+			return false;
 		}
+		JChunk other = (JChunk) obj;
+		if (this.x != other.x) {
+			return false;
+		}
+		if (this.z != other.z) {
+			return false;
+		}
+		return true;
 	}
 
 }

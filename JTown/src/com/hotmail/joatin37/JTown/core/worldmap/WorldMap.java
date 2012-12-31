@@ -42,14 +42,18 @@ import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.hotmail.joatin37.JTown.api.Collection;
+import com.hotmail.joatin37.JTown.api.ICollectionManager;
+import com.hotmail.joatin37.JTown.api.IWorldMap;
 import com.hotmail.joatin37.JTown.api.Plot;
 
-public class WorldMap {
+public class WorldMap implements IWorldMap {
 
 	private HashMap<String, WorldMapCache> caches;
 	private final JavaPlugin jtown;
+	private final ICollectionManager manager;
 
-	public WorldMap(JavaPlugin jtown) {
+	public WorldMap(JavaPlugin jtown, ICollectionManager manager) {
+		this.manager = manager;
 		this.jtown = jtown;
 		this.caches = new HashMap<String, WorldMapCache>(3, (float) 0.75);
 		Iterator<World> iterator = jtown.getServer().getWorlds().iterator();
@@ -61,7 +65,8 @@ public class WorldMap {
 					w,
 					new WorldMapCache(this.jtown.getConfig().getInt(
 							"chachesize", 1000), new File(this.jtown
-							.getDataFolder(), w + ".sav"), this.jtown, w));
+							.getDataFolder(), w + ".sav"), this.jtown, w,
+							manager));
 		}
 	}
 
@@ -72,7 +77,7 @@ public class WorldMap {
 		}
 	}
 
-	public BlockRow get(Location loc) {
+	public BlockRow1 get(Location loc) {
 		WorldMapCache cache = this.caches.get(loc.getWorld().getName());
 		if (cache == null) {
 			return null;
@@ -88,6 +93,7 @@ public class WorldMap {
 	 * @return if the location can be set.
 	 * @since 1.0.0
 	 */
+	@Override
 	public boolean canSet(Location loc) {
 		if (loc == null) {
 			return false;
@@ -111,6 +117,7 @@ public class WorldMap {
 	 * @return if a plot can be set there.
 	 * @since 1.0.0
 	 */
+	@Override
 	public boolean canSet(Location loc, Collection coll) {
 		return false;
 		// TODO
@@ -130,6 +137,7 @@ public class WorldMap {
 	 *            the plot to set. This may be null.
 	 * @since 1.0.0
 	 */
+	@Override
 	public void set(Location loc, Collection coll, Plot plot) {
 		this.set(loc, coll, plot, (short) -1, (short) -1);
 	}
@@ -147,6 +155,7 @@ public class WorldMap {
 	 *            the plot to set. This may be null.
 	 * @since 1.0.0
 	 */
+	@Override
 	public void set(Location loc, Collection coll, Plot plot, short maxheight,
 			short minheight) {
 		this.caches.get(loc.getWorld().getName()).set(loc, coll, plot,

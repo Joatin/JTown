@@ -169,8 +169,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.hotmail.joatin37.JTown.api.Collection;
 import com.hotmail.joatin37.JTown.api.ICollectionManager;
+import com.hotmail.joatin37.JTown.api.IWorldMap;
 import com.hotmail.joatin37.JTown.api.Plot;
-import com.hotmail.joatin37.JTown.core.worldmap.BlockRow;
+import com.hotmail.joatin37.JTown.core.worldmap.BlockRow1;
 import com.hotmail.joatin37.JTown.core.worldmap.WorldMap;
 
 public final class CollectionManager implements Listener, ICollectionManager {
@@ -193,6 +194,16 @@ public final class CollectionManager implements Listener, ICollectionManager {
 
 	}
 
+	@Override
+	public Collection getCollection(UUID uuid) {
+		return this.collections.get(uuid);
+	}
+
+	@Override
+	public Collection getCurrentCollection(String player) {
+		return this.players.get(player);
+	}
+
 	private Collection reconstructCollection(String plugin, String type,
 			UUID uuid) {
 		return this.core.getExtension(plugin).constructCollection(type, this,
@@ -206,7 +217,7 @@ public final class CollectionManager implements Listener, ICollectionManager {
 	}
 
 	protected void onInit() {
-		this.worldmap = new WorldMap(this.jtown);
+		this.worldmap = new WorldMap(this.jtown, this);
 		this.jtown.getServer().getPluginManager()
 				.registerEvents(this, this.jtown);
 	}
@@ -266,6 +277,11 @@ public final class CollectionManager implements Listener, ICollectionManager {
 
 	}
 
+	@Override
+	public IWorldMap getWorldMap() {
+		return this.worldmap;
+	}
+
 	public void save() {
 		if (this.saveconfig == null || this.configfile == null) {
 			return;
@@ -299,7 +315,7 @@ public final class CollectionManager implements Listener, ICollectionManager {
 	@EventHandler
 	public void onBlockBreakEvent(BlockBreakEvent event) {
 
-		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		BlockRow1 row = this.worldmap.get(event.getBlock().getLocation());
 		if (row == null) {
 			return;
 		}
@@ -314,7 +330,7 @@ public final class CollectionManager implements Listener, ICollectionManager {
 	@EventHandler
 	public void onBlockBurnEvent(BlockBurnEvent event) {
 
-		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		BlockRow1 row = this.worldmap.get(event.getBlock().getLocation());
 		if (row == null) {
 			return;
 		}
@@ -329,7 +345,7 @@ public final class CollectionManager implements Listener, ICollectionManager {
 	@EventHandler
 	public void onBlockCanBuildEvent(BlockCanBuildEvent event) {
 
-		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		BlockRow1 row = this.worldmap.get(event.getBlock().getLocation());
 		if (row == null) {
 			return;
 		}
@@ -344,7 +360,7 @@ public final class CollectionManager implements Listener, ICollectionManager {
 	@EventHandler
 	public void onBlockDamageEvent(BlockDamageEvent event) {
 
-		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		BlockRow1 row = this.worldmap.get(event.getBlock().getLocation());
 		if (row == null) {
 			return;
 		}
@@ -359,7 +375,7 @@ public final class CollectionManager implements Listener, ICollectionManager {
 	@EventHandler
 	public void onBlockDispenseEvent(BlockDispenseEvent event) {
 
-		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		BlockRow1 row = this.worldmap.get(event.getBlock().getLocation());
 		if (row == null) {
 			return;
 		}
@@ -374,7 +390,7 @@ public final class CollectionManager implements Listener, ICollectionManager {
 	@EventHandler
 	public void onBlockExpEvent(BlockExpEvent event) {
 
-		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		BlockRow1 row = this.worldmap.get(event.getBlock().getLocation());
 		if (row == null) {
 			return;
 		}
@@ -389,7 +405,7 @@ public final class CollectionManager implements Listener, ICollectionManager {
 	@EventHandler
 	public void onBlockFadeEvent(BlockFadeEvent event) {
 
-		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		BlockRow1 row = this.worldmap.get(event.getBlock().getLocation());
 		if (row == null) {
 			return;
 		}
@@ -404,7 +420,7 @@ public final class CollectionManager implements Listener, ICollectionManager {
 	@EventHandler
 	public void onBlockFormEvent(BlockFormEvent event) {
 
-		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		BlockRow1 row = this.worldmap.get(event.getBlock().getLocation());
 		if (row == null) {
 			return;
 		}
@@ -419,7 +435,7 @@ public final class CollectionManager implements Listener, ICollectionManager {
 	@EventHandler
 	public void onBlockFromToEvent(BlockFromToEvent event) {
 
-		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		BlockRow1 row = this.worldmap.get(event.getBlock().getLocation());
 		if (row == null) {
 			return;
 		}
@@ -434,7 +450,7 @@ public final class CollectionManager implements Listener, ICollectionManager {
 	@EventHandler
 	public void onBlockGrowEvent(BlockGrowEvent event) {
 
-		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		BlockRow1 row = this.worldmap.get(event.getBlock().getLocation());
 		if (row == null) {
 			return;
 		}
@@ -449,7 +465,7 @@ public final class CollectionManager implements Listener, ICollectionManager {
 	@EventHandler
 	public void onBlockIgniteEvent(BlockIgniteEvent event) {
 
-		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		BlockRow1 row = this.worldmap.get(event.getBlock().getLocation());
 		if (row == null) {
 			return;
 		}
@@ -463,7 +479,7 @@ public final class CollectionManager implements Listener, ICollectionManager {
 
 	@EventHandler
 	public void onBlockPhysicsEvent(BlockPhysicsEvent event) {
-		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		BlockRow1 row = this.worldmap.get(event.getBlock().getLocation());
 		if (row == null) {
 			return;
 		}
@@ -478,7 +494,7 @@ public final class CollectionManager implements Listener, ICollectionManager {
 	@EventHandler
 	public void onBlockPistonExtendEvent(BlockPistonExtendEvent event) {
 
-		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		BlockRow1 row = this.worldmap.get(event.getBlock().getLocation());
 		if (row == null) {
 			return;
 		}
@@ -493,7 +509,7 @@ public final class CollectionManager implements Listener, ICollectionManager {
 	@EventHandler
 	public void onBlockPistonRetractEvent(BlockPistonRetractEvent event) {
 
-		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		BlockRow1 row = this.worldmap.get(event.getBlock().getLocation());
 		if (row == null) {
 			return;
 		}
@@ -508,7 +524,7 @@ public final class CollectionManager implements Listener, ICollectionManager {
 	@EventHandler
 	public void onBlockPlaceEvent(BlockPlaceEvent event) {
 
-		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		BlockRow1 row = this.worldmap.get(event.getBlock().getLocation());
 		if (row == null) {
 			return;
 		}
@@ -523,7 +539,7 @@ public final class CollectionManager implements Listener, ICollectionManager {
 	@EventHandler
 	public void onBlockRedstoneEvent(BlockRedstoneEvent event) {
 
-		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		BlockRow1 row = this.worldmap.get(event.getBlock().getLocation());
 		if (row == null) {
 			return;
 		}
@@ -538,7 +554,7 @@ public final class CollectionManager implements Listener, ICollectionManager {
 	@EventHandler
 	public void onBlockSpreadEvent(BlockSpreadEvent event) {
 
-		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		BlockRow1 row = this.worldmap.get(event.getBlock().getLocation());
 		if (row == null) {
 			return;
 		}
@@ -553,7 +569,7 @@ public final class CollectionManager implements Listener, ICollectionManager {
 	@EventHandler
 	public void onEntityBlockFormEvent(EntityBlockFormEvent event) {
 
-		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		BlockRow1 row = this.worldmap.get(event.getBlock().getLocation());
 		if (row == null) {
 			return;
 		}
@@ -568,7 +584,7 @@ public final class CollectionManager implements Listener, ICollectionManager {
 	@EventHandler
 	public void onLeavesDecayEvent(LeavesDecayEvent event) {
 
-		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		BlockRow1 row = this.worldmap.get(event.getBlock().getLocation());
 		if (row == null) {
 			return;
 		}
@@ -583,7 +599,7 @@ public final class CollectionManager implements Listener, ICollectionManager {
 	@EventHandler
 	public void onNotePlayEvent(NotePlayEvent event) {
 
-		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		BlockRow1 row = this.worldmap.get(event.getBlock().getLocation());
 		if (row == null) {
 			return;
 		}
@@ -598,7 +614,7 @@ public final class CollectionManager implements Listener, ICollectionManager {
 	@EventHandler
 	public void onSignChangeEvent(SignChangeEvent event) {
 
-		BlockRow row = this.worldmap.get(event.getBlock().getLocation());
+		BlockRow1 row = this.worldmap.get(event.getBlock().getLocation());
 		if (row == null) {
 			return;
 		}
@@ -965,7 +981,7 @@ public final class CollectionManager implements Listener, ICollectionManager {
 	@EventHandler
 	public void onPlayerJoinEvent(PlayerJoinEvent event) {
 		Collection coll;
-		BlockRow row = this.worldmap.get(event.getPlayer().getLocation());
+		BlockRow1 row = this.worldmap.get(event.getPlayer().getLocation());
 		if (row == null) {
 			coll = null;
 		} else {
@@ -998,8 +1014,12 @@ public final class CollectionManager implements Listener, ICollectionManager {
 	@EventHandler
 	public void onPlayerMoveEvent(PlayerMoveEvent event) {
 
-		BlockRow row1 = this.worldmap.get(event.getFrom());
-		BlockRow row2 = this.worldmap.get(event.getTo());
+		BlockRow1 row1 = this.worldmap.get(event.getFrom());
+		BlockRow1 row2 = this.worldmap.get(event.getTo());
+		if (row1 != null) {
+			this.players.put(event.getPlayer().getName(),
+					this.collections.get(row1.getCollectionId()));
+		}
 		if (row1 == null && row2 == null) {
 			return;
 		}

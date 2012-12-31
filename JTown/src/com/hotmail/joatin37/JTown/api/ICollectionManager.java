@@ -9,4 +9,10 @@ public interface ICollectionManager {
 			UUID uuid);
 
 	public boolean putNewCollection(Collection coll, Location baseloc);
+
+	public IWorldMap getWorldMap();
+
+	public Collection getCurrentCollection(String player);
+
+	public Collection getCollection(UUID uuid);
 }

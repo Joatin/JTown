@@ -54,6 +54,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.google.common.io.Files;
 import com.hotmail.joatin37.JTown.api.Collection;
+import com.hotmail.joatin37.JTown.api.ICollectionManager;
 import com.hotmail.joatin37.JTown.api.Plot;
 import com.hotmail.joatin37.JTown.core.ChunkPos;
 
@@ -78,8 +79,10 @@ public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
 
 	private final String world;
 
+	private final ICollectionManager manager;
+
 	public WorldMapCache(int maxcapacity, File file, JavaPlugin jtown,
-			String world) {
+			String world, ICollectionManager manager) {
 		super(maxcapacity, 0.75f, true);
 		this.world = world;
 		this.MAX_ENTRIES = maxcapacity;
@@ -87,6 +90,7 @@ public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
 		this.jtown = jtown;
 		this.allchunks = this.loadAllReferences();
 		this.dirtychunks = new HashMap<ChunkPos, JChunk>();
+		this.manager = manager;
 
 	}
 
@@ -106,7 +110,7 @@ public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
 		JChunk chunk;
 		UUID cuuid;
 		UUID plotuuid = null;
-		BlockRow row;
+		BlockRow1 row;
 		if (coll == null) {
 			row = null;
 		} else {
@@ -114,7 +118,7 @@ public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
 			if (plot != null) {
 				plotuuid = plot.getUUID();
 			}
-			row = new BlockRow(cuuid, plotuuid, loc.getBlockX(),
+			row = new BlockRow1(cuuid, plotuuid, loc.getBlockX(),
 					loc.getBlockZ(), maxheight, minheight);
 		}
 		if ((chunk = this.dirtychunks.get(pos)) != null) {
@@ -126,7 +130,7 @@ public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
 				chunk = this.getJChunk(pos);
 				if (chunk == null) {
 					chunk = new JChunk(loc.getChunk().getX(), loc.getChunk()
-							.getZ());
+							.getZ(), this.manager);
 				}
 			}
 			chunk.put(loc.getBlockX(), loc.getBlockZ(), row);
@@ -139,39 +143,52 @@ public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
 	public void save() {
 		// TODO
 		File sfile;
-		DataInputStream input;
+		DataInputStream input = null;
 		DataOutputStream output;
+		JChunk chunk;
 		try {
 			sfile = File.createTempFile("tempfile", null,
 					this.savefile.getParentFile());
-			input = new DataInputStream(new FileInputStream(this.savefile));
-			output = new DataOutputStream(new FileOutputStream("temp"));
-			input.readInt(); // reads the version int;
-			output.writeInt(this.VERSION);
 			try {
-				while (true) {
-					int size = input.readInt();
-					int a = input.readInt();
-					int b = input.readInt();
-					ChunkPos pos = ChunkPos.Wrap(a, b);
-					if (this.dirtychunks.containsKey(pos)) {
-
-					} else {
-						byte[] ba = new byte[size - 8];
-						input.read(ba);
-						output.writeInt(size);
-						output.writeInt(a);
-						output.writeInt(b);
-						output.write(ba);
-					}
-				}
-			} catch (EOFException e) {
+				input = new DataInputStream(new FileInputStream(this.savefile));
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+			output = new DataOutputStream(new FileOutputStream("temp"));
+			output.writeInt(this.VERSION);
+			if (input != null) {
+				input.readInt(); // reads the version int;
 
+				try {
+					while (true) {
+						int size = input.readInt();
+						int a = input.readInt();
+						int b = input.readInt();
+						ChunkPos pos = ChunkPos.Wrap(a, b);
+						if ((chunk = this.dirtychunks.get(pos)) != null) {
+							input.skip(size - 8);
+							byte[] c = chunk.getBytes();
+							output.writeInt(c.length);
+							output.write(c);
+						} else {
+							byte[] ba = new byte[size - 8];
+							input.read(ba);
+							output.writeInt(size);
+							output.writeInt(a);
+							output.writeInt(b);
+							output.write(ba);
+						}
+					}
+				} catch (EOFException e) {
+				}
+			}
 			if (this.dirtychunks.size() != 0) {
 				Iterator<JChunk> dirty = this.dirtychunks.values().iterator();
 				while (dirty.hasNext()) {
-
+					byte[] w = dirty.next().getBytes();
+					output.write(w.length);
+					output.write(w);
 				}
 			}
 			Files.copy(sfile, this.savefile);
@@ -182,6 +199,7 @@ public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 	}
 
 	private List<ChunkPos> loadAllReferences() {
@@ -197,7 +215,10 @@ public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
 					int a = input.readInt();
 					int b = input.readInt();
 					vec.add(ChunkPos.Wrap(a, b));
-					input.skip(size - 8);
+					byte[] q = new byte[size - 8];
+					input.read(q);
+					new JChunk(a, b, this.manager).reconstructFromBytes(
+							this.VERSION, q);
 
 				}
 			} catch (EOFException e) {
@@ -221,7 +242,7 @@ public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
 		return this.size() > this.MAX_ENTRIES;
 	}
 
-	public BlockRow get(Location loc) {
+	public BlockRow1 get(Location loc) {
 		ChunkPos pos = ChunkPos.Wrap(loc.getChunk().getX(), loc.getChunk()
 				.getZ());
 		if (this.containsKey(pos)) {
@@ -249,27 +270,10 @@ public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
 						int a = input.readInt();
 						int b = input.readInt();
 						if (a == pos.getX() && b == pos.getZ()) {
-							JChunk chunk = new JChunk(a, b);
-							for (int i = 0; i < size - 8 / BlockRow.Size; i++) {
-								long l1 = input.readLong();
-								long l2 = input.readLong();
-								long l3 = input.readLong();
-								long l4 = input.readLong();
-								int i1 = input.readInt();
-								int i2 = input.readInt();
-								int i3 = input.readInt();
-								int i4 = input.readInt();
-								UUID uuid1 = null;
-								UUID uuid2 = null;
-								if (l1 != 0 && l2 != 0) {
-									uuid1 = new UUID(l1, l2);
-								}
-								if (l3 != 0 && l4 != 0) {
-									uuid1 = new UUID(l3, l4);
-								}
-								chunk.put(i1, 12, new BlockRow(uuid1, uuid2,
-										i1, i2, i3, i4));
-							}
+							JChunk chunk = new JChunk(a, b, this.manager);
+							byte[] u = new byte[size - 8];
+							input.read(u);
+							chunk.reconstructFromBytes(this.VERSION, u);
 							input.close();
 							return chunk;
 						}

@@ -162,12 +162,25 @@ import org.bukkit.event.weather.LightningStrikeEvent;
 import org.bukkit.event.world.PortalCreateEvent;
 import org.bukkit.event.world.StructureGrowEvent;
 
-import com.hotmail.joatin37.JTown.core.worldmap.BlockRow;
+import com.hotmail.joatin37.JTown.core.worldmap.BlockRow1;
 
 public abstract class Plot {
 
 	private final Collection parent;
 	private final UUID uuid;
+	private int landmass = 0;
+
+	public void addLandMass() {
+		this.landmass++;
+	}
+
+	public void removeLandMass() {
+		this.landmass--;
+	}
+
+	public int getLandMass() {
+		return this.landmass;
+	}
 
 	protected Plot(Collection parent, UUID uuid) {
 		this.parent = parent;
@@ -178,7 +191,7 @@ public abstract class Plot {
 		return this.uuid;
 	}
 
-	protected Collection getParent() {
+	public Collection getParent() {
 		return this.parent;
 	}
 
@@ -188,329 +201,329 @@ public abstract class Plot {
 
 	// All block listeners
 
-	public final void BlockBreakEvent(BlockBreakEvent event, BlockRow row) {
+	public final void BlockBreakEvent(BlockBreakEvent event, BlockRow1 row) {
 
 	}
 
-	public final void BlockBurnEvent(BlockBurnEvent event, BlockRow row) {
+	public final void BlockBurnEvent(BlockBurnEvent event, BlockRow1 row) {
 
 	}
 
-	public final void BlockCanBuildEvent(BlockCanBuildEvent event, BlockRow row) {
+	public final void BlockCanBuildEvent(BlockCanBuildEvent event, BlockRow1 row) {
 
 	}
 
-	public final void BlockDamageEvent(BlockDamageEvent event, BlockRow row) {
+	public final void BlockDamageEvent(BlockDamageEvent event, BlockRow1 row) {
 
 	}
 
-	public final void BlockDispenseEvent(BlockDispenseEvent event, BlockRow row) {
+	public final void BlockDispenseEvent(BlockDispenseEvent event, BlockRow1 row) {
 
 	}
 
-	public final void BlockEvent(BlockEvent event, BlockRow row) {
+	public final void BlockEvent(BlockEvent event, BlockRow1 row) {
 
 	}
 
-	public final void BlockExpEvent(BlockExpEvent event, BlockRow row) {
+	public final void BlockExpEvent(BlockExpEvent event, BlockRow1 row) {
 
 	}
 
-	public final void BlockFadeEvent(BlockFadeEvent event, BlockRow row) {
+	public final void BlockFadeEvent(BlockFadeEvent event, BlockRow1 row) {
 
 	}
 
-	public final void BlockFormEvent(BlockFormEvent event, BlockRow row) {
+	public final void BlockFormEvent(BlockFormEvent event, BlockRow1 row) {
 
 	}
 
-	public final void BlockFromToEvent(BlockFromToEvent event, BlockRow row) {
+	public final void BlockFromToEvent(BlockFromToEvent event, BlockRow1 row) {
 
 	}
 
-	public final void BlockGrowEvent(BlockGrowEvent event, BlockRow row) {
+	public final void BlockGrowEvent(BlockGrowEvent event, BlockRow1 row) {
 
 	}
 
-	public final void BlockIgniteEvent(BlockIgniteEvent event, BlockRow row) {
+	public final void BlockIgniteEvent(BlockIgniteEvent event, BlockRow1 row) {
 
 	}
 
-	public final void BlockPhysicsEvent(BlockPhysicsEvent event, BlockRow row) {
+	public final void BlockPhysicsEvent(BlockPhysicsEvent event, BlockRow1 row) {
 
 	}
 
-	public final void BlockPistonEvent(BlockPistonEvent event, BlockRow row) {
+	public final void BlockPistonEvent(BlockPistonEvent event, BlockRow1 row) {
 
 	}
 
 	public final void BlockPistonExtendEvent(BlockPistonExtendEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
 	public final void BlockPistonRetractEvent(BlockPistonRetractEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
-	public final void BlockPlaceEvent(BlockPlaceEvent event, BlockRow row) {
+	public final void BlockPlaceEvent(BlockPlaceEvent event, BlockRow1 row) {
 
 	}
 
-	public final void BlockRedstoneEvent(BlockRedstoneEvent event, BlockRow row) {
+	public final void BlockRedstoneEvent(BlockRedstoneEvent event, BlockRow1 row) {
 
 	}
 
-	public final void BlockSpreadEvent(BlockSpreadEvent event, BlockRow row) {
+	public final void BlockSpreadEvent(BlockSpreadEvent event, BlockRow1 row) {
 
 	}
 
 	public final void EntityBlockFormEvent(EntityBlockFormEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
-	public final void LeavesDecayEvent(LeavesDecayEvent event, BlockRow row) {
+	public final void LeavesDecayEvent(LeavesDecayEvent event, BlockRow1 row) {
 
 	}
 
-	public final void NotePlayEvent(NotePlayEvent event, BlockRow row) {
+	public final void NotePlayEvent(NotePlayEvent event, BlockRow1 row) {
 
 	}
 
-	public final void SignChangeEvent(SignChangeEvent event, BlockRow row) {
+	public final void SignChangeEvent(SignChangeEvent event, BlockRow1 row) {
 
 	}
 
 	// Enchantment Listeners
 
-	public final void EnchantItemEvent(EnchantItemEvent event, BlockRow row) {
+	public final void EnchantItemEvent(EnchantItemEvent event, BlockRow1 row) {
 
 	}
 
 	public final void PrepareItemEnchantEvent(PrepareItemEnchantEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
 	// Entity listeners
 
-	public final void CreatureSpawnEvent(CreatureSpawnEvent event, BlockRow row) {
+	public final void CreatureSpawnEvent(CreatureSpawnEvent event, BlockRow1 row) {
 
 	}
 
-	public final void CreeperPowerEvent(CreeperPowerEvent event, BlockRow row) {
+	public final void CreeperPowerEvent(CreeperPowerEvent event, BlockRow1 row) {
 
 	}
 
 	public final void EntityBreakDoorEvent(EntityBreakDoorEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
 	public final void EntityChangeBlockEvent(EntityChangeBlockEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
 	public final void EntityCombustByBlockEvent(
-			EntityCombustByBlockEvent event, BlockRow row) {
+			EntityCombustByBlockEvent event, BlockRow1 row) {
 
 	}
 
 	public final void EntityCombustByEntityEvent(
-			EntityCombustByEntityEvent event, BlockRow row) {
+			EntityCombustByEntityEvent event, BlockRow1 row) {
 
 	}
 
-	public final void EntityCombustEvent(EntityCombustEvent event, BlockRow row) {
+	public final void EntityCombustEvent(EntityCombustEvent event, BlockRow1 row) {
 
 	}
 
 	public final void EntityCreatePortalEvent(EntityCreatePortalEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
 	public final void EntityDamageByBlockEvent(EntityDamageByBlockEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
 	public final void EntityDamageByEntityEvent(
-			EntityDamageByEntityEvent event, BlockRow row) {
+			EntityDamageByEntityEvent event, BlockRow1 row) {
 
 	}
 
-	public final void EntityDamageEvent(EntityDamageEvent event, BlockRow row) {
+	public final void EntityDamageEvent(EntityDamageEvent event, BlockRow1 row) {
 
 	}
 
-	public final void EntityEvent(EntityEvent event, BlockRow row) {
+	public final void EntityEvent(EntityEvent event, BlockRow1 row) {
 
 	}
 
-	public final void EntityExplodeEvent(EntityExplodeEvent event, BlockRow row) {
+	public final void EntityExplodeEvent(EntityExplodeEvent event, BlockRow1 row) {
 
 	}
 
 	public final void EntityInteractEvent(EntityInteractEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
 	public final void EntityPortalEnterEvent(EntityPortalEnterEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
 	public final void EntityRegainHealthEvent(EntityRegainHealthEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
 	public final void EntityShootBowEvent(EntityShootBowEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
-	public final void EntityTameEvent(EntityTameEvent event, BlockRow row) {
+	public final void EntityTameEvent(EntityTameEvent event, BlockRow1 row) {
 
 	}
 
-	public final void EntityTargetEvent(EntityTargetEvent event, BlockRow row) {
+	public final void EntityTargetEvent(EntityTargetEvent event, BlockRow1 row) {
 
 	}
 
 	public final void EntityTargetLivingEntityEvent(
-			EntityTargetLivingEntityEvent event, BlockRow row) {
+			EntityTargetLivingEntityEvent event, BlockRow1 row) {
 
 	}
 
 	public final void EntityTeleportEvent(EntityTeleportEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
-	public final void ExpBottleEvent(ExpBottleEvent event, BlockRow row) {
+	public final void ExpBottleEvent(ExpBottleEvent event, BlockRow1 row) {
 
 	}
 
 	public final void ExplosionPrimeEvent(ExplosionPrimeEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
 	public final void FoodLevelChangeEvent(FoodLevelChangeEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
-	public final void ItemDespawnEvent(ItemDespawnEvent event, BlockRow row) {
+	public final void ItemDespawnEvent(ItemDespawnEvent event, BlockRow1 row) {
 
 	}
 
-	public final void ItemSpawnEvent(ItemSpawnEvent event, BlockRow row) {
+	public final void ItemSpawnEvent(ItemSpawnEvent event, BlockRow1 row) {
 
 	}
 
-	public final void PigZapEvent(PigZapEvent event, BlockRow row) {
+	public final void PigZapEvent(PigZapEvent event, BlockRow1 row) {
 
 	}
 
-	public final void PlayerDeathEvent(PlayerDeathEvent event, BlockRow row) {
+	public final void PlayerDeathEvent(PlayerDeathEvent event, BlockRow1 row) {
 
 	}
 
-	public final void PotionSplashEvent(PotionSplashEvent event, BlockRow row) {
+	public final void PotionSplashEvent(PotionSplashEvent event, BlockRow1 row) {
 
 	}
 
-	public final void ProjectileHitEvent(ProjectileHitEvent event, BlockRow row) {
+	public final void ProjectileHitEvent(ProjectileHitEvent event, BlockRow1 row) {
 
 	}
 
 	public final void ProjectileLaunchEvent(ProjectileLaunchEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
-	public final void SheepDyeWoolEvent(SheepDyeWoolEvent event, BlockRow row) {
+	public final void SheepDyeWoolEvent(SheepDyeWoolEvent event, BlockRow1 row) {
 
 	}
 
 	public final void SheepRegrowWoolEvent(SheepRegrowWoolEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
-	public final void SlimeSplitEvent(SlimeSplitEvent event, BlockRow row) {
+	public final void SlimeSplitEvent(SlimeSplitEvent event, BlockRow1 row) {
 
 	}
 
 	// Hanging listeners
 
 	public final void HangingBreakByEntityEvent(
-			HangingBreakByEntityEvent event, BlockRow row) {
+			HangingBreakByEntityEvent event, BlockRow1 row) {
 
 	}
 
-	public final void HangingBreakEvent(HangingBreakEvent event, BlockRow row) {
+	public final void HangingBreakEvent(HangingBreakEvent event, BlockRow1 row) {
 
 	}
 
-	public final void HangingEvent(HangingEvent event, BlockRow row) {
+	public final void HangingEvent(HangingEvent event, BlockRow1 row) {
 
 	}
 
-	public final void HangingPlaceEvent(HangingPlaceEvent event, BlockRow row) {
+	public final void HangingPlaceEvent(HangingPlaceEvent event, BlockRow1 row) {
 
 	}
 
 	// Inventory listeners
 
-	public final void BrewEvent(BrewEvent event, BlockRow row) {
+	public final void BrewEvent(BrewEvent event, BlockRow1 row) {
 
 	}
 
-	public final void CraftItemEvent(CraftItemEvent event, BlockRow row) {
+	public final void CraftItemEvent(CraftItemEvent event, BlockRow1 row) {
 
 	}
 
-	public final void FurnaceBurnEvent(FurnaceBurnEvent event, BlockRow row) {
+	public final void FurnaceBurnEvent(FurnaceBurnEvent event, BlockRow1 row) {
 
 	}
 
 	public final void FurnaceExtractEvent(FurnaceExtractEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
-	public final void FurnaceSmeltEvent(FurnaceSmeltEvent event, BlockRow row) {
+	public final void FurnaceSmeltEvent(FurnaceSmeltEvent event, BlockRow1 row) {
 
 	}
 
 	public final void InventoryClickEvent(InventoryClickEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
 	public final void InventoryCloseEvent(InventoryCloseEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
-	public final void InventoryEvent(InventoryEvent event, BlockRow row) {
+	public final void InventoryEvent(InventoryEvent event, BlockRow1 row) {
 
 	}
 
-	public final void InventoryOpenEvent(InventoryOpenEvent event, BlockRow row) {
+	public final void InventoryOpenEvent(InventoryOpenEvent event, BlockRow1 row) {
 
 	}
 
 	public final void PrepareItemCraftEvent(PrepareItemCraftEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
@@ -518,249 +531,249 @@ public abstract class Plot {
 
 	@EventHandler
 	public final void AsyncPlayerChatEvent(AsyncPlayerChatEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
 	public final void AsyncPlayerPreLoginEvent(AsyncPlayerPreLoginEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
 	public final void PlayerAnimationEvent(PlayerAnimationEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
 	public final void PlayerBedEnterEvent(PlayerBedEnterEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
 	public final void PlayerBedLeaveEvent(PlayerBedLeaveEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
 	public final void PlayerBucketEmptyEvent(PlayerBucketEmptyEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
-	public final void PlayerBucketEvent(PlayerBucketEvent event, BlockRow row) {
+	public final void PlayerBucketEvent(PlayerBucketEvent event, BlockRow1 row) {
 
 	}
 
 	public final void PlayerBucketFillEvent(PlayerBucketFillEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
 	public final void PlayerChangedWorldEvent(PlayerChangedWorldEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
-	public final void PlayerChannelEvent(PlayerChannelEvent event, BlockRow row) {
+	public final void PlayerChannelEvent(PlayerChannelEvent event, BlockRow1 row) {
 
 	}
 
 	public final void PlayerChatTabCompleteEvent(
-			PlayerChatTabCompleteEvent event, BlockRow row) {
+			PlayerChatTabCompleteEvent event, BlockRow1 row) {
 
 	}
 
 	public final void PlayerCommandPreprocessEvent(
-			PlayerCommandPreprocessEvent event, BlockRow row) {
+			PlayerCommandPreprocessEvent event, BlockRow1 row) {
 
 	}
 
 	public final void PlayerDropItemEvent(PlayerDropItemEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
 	public final void PlayerEggThrowEvent(PlayerEggThrowEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
-	public final void PlayerEvent(PlayerEvent event, BlockRow row) {
+	public final void PlayerEvent(PlayerEvent event, BlockRow1 row) {
 
 	}
 
 	public final void PlayerExpChangeEvent(PlayerExpChangeEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
-	public final void PlayerFishEvent(PlayerFishEvent event, BlockRow row) {
+	public final void PlayerFishEvent(PlayerFishEvent event, BlockRow1 row) {
 
 	}
 
 	public final void PlayerGameModeChangeEvent(
-			PlayerGameModeChangeEvent event, BlockRow row) {
+			PlayerGameModeChangeEvent event, BlockRow1 row) {
 
 	}
 
 	public final void PlayerInteractEntityEvent(
-			PlayerInteractEntityEvent event, BlockRow row) {
+			PlayerInteractEntityEvent event, BlockRow1 row) {
 
 	}
 
 	public final void PlayerInteractEvent(PlayerInteractEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
 	public final void PlayerItemBreakEvent(PlayerItemBreakEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
 	public final void PlayerItemHeldEvent(PlayerItemHeldEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
-	public final void PlayerJoinEvent(PlayerJoinEvent event, BlockRow row) {
+	public final void PlayerJoinEvent(PlayerJoinEvent event, BlockRow1 row) {
 
 	}
 
-	public final void PlayerKickEvent(PlayerKickEvent event, BlockRow row) {
+	public final void PlayerKickEvent(PlayerKickEvent event, BlockRow1 row) {
 
 	}
 
 	public final void PlayerLevelChangeEvent(PlayerLevelChangeEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
-	public final void PlayerLoginEvent(PlayerLoginEvent event, BlockRow row) {
+	public final void PlayerLoginEvent(PlayerLoginEvent event, BlockRow1 row) {
 
 	}
 
 	public final void PlayerPickupItemEvent(PlayerPickupItemEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
-	public final void PlayerPortalEvent(PlayerMoveEvent event, BlockRow row) {
+	public final void PlayerPortalEvent(PlayerMoveEvent event, BlockRow1 row) {
 
 	}
 
-	public final void PlayerQuitEvent(PlayerQuitEvent event, BlockRow row) {
+	public final void PlayerQuitEvent(PlayerQuitEvent event, BlockRow1 row) {
 
 	}
 
 	public final void PlayerRegisterChannelEvent(
-			PlayerRegisterChannelEvent event, BlockRow row) {
+			PlayerRegisterChannelEvent event, BlockRow1 row) {
 
 	}
 
-	public final void PlayerRespawnEvent(PlayerRespawnEvent event, BlockRow row) {
+	public final void PlayerRespawnEvent(PlayerRespawnEvent event, BlockRow1 row) {
 
 	}
 
 	public final void PlayerShearEntityEvent(PlayerShearEntityEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
 	public final void PlayerTeleportEvent(PlayerTeleportEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
 	public final void PlayerToggleFlightEvent(PlayerToggleFlightEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
 	public final void PlayerToggleSneakEvent(PlayerToggleSneakEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
 	public final void PlayerToggleSprintEvent(PlayerToggleSprintEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
 	public final void PlayerUnregisterChannelEvent(
-			PlayerUnregisterChannelEvent event, BlockRow row) {
+			PlayerUnregisterChannelEvent event, BlockRow1 row) {
 
 	}
 
 	public final void PlayerVelocityEvent(PlayerVelocityEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
 	// Vehicle listeners
 
 	public final void VehicleBlockCollisionEvent(
-			VehicleBlockCollisionEvent event, BlockRow row) {
+			VehicleBlockCollisionEvent event, BlockRow1 row) {
 
 	}
 
 	public final void VehicleCollisionEvent(VehicleCollisionEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
-	public final void VehicleCreateEvent(VehicleCreateEvent event, BlockRow row) {
+	public final void VehicleCreateEvent(VehicleCreateEvent event, BlockRow1 row) {
 
 	}
 
-	public final void VehicleDamageEvent(VehicleDamageEvent event, BlockRow row) {
+	public final void VehicleDamageEvent(VehicleDamageEvent event, BlockRow1 row) {
 
 	}
 
 	public final void VehicleDestroyEvent(VehicleDestroyEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
-	public final void VehicleEnterEvent(VehicleEnterEvent event, BlockRow row) {
+	public final void VehicleEnterEvent(VehicleEnterEvent event, BlockRow1 row) {
 
 	}
 
 	public final void VehicleEntityCollisionEvent(
-			VehicleEntityCollisionEvent event, BlockRow row) {
+			VehicleEntityCollisionEvent event, BlockRow1 row) {
 
 	}
 
-	public final void VehicleEvent(VehicleEvent event, BlockRow row) {
+	public final void VehicleEvent(VehicleEvent event, BlockRow1 row) {
 
 	}
 
-	public final void VehicleExitEvent(VehicleExitEvent event, BlockRow row) {
+	public final void VehicleExitEvent(VehicleExitEvent event, BlockRow1 row) {
 
 	}
 
-	public final void VehicleMoveEvent(VehicleMoveEvent event, BlockRow row) {
+	public final void VehicleMoveEvent(VehicleMoveEvent event, BlockRow1 row) {
 
 	}
 
-	public final void VehicleUpdateEvent(VehicleUpdateEvent event, BlockRow row) {
+	public final void VehicleUpdateEvent(VehicleUpdateEvent event, BlockRow1 row) {
 
 	}
 
 	// Weather listeners
 
 	public final void LightningStrikeEvent(LightningStrikeEvent event,
-			BlockRow row) {
+			BlockRow1 row) {
 
 	}
 
 	// World listeners
 
-	public final void PortalCreateEvent(PortalCreateEvent event, BlockRow row) {
+	public final void PortalCreateEvent(PortalCreateEvent event, BlockRow1 row) {
 
 	}
 
-	public final void StructureGrowEvent(StructureGrowEvent event, BlockRow row) {
+	public final void StructureGrowEvent(StructureGrowEvent event, BlockRow1 row) {
 
 	}
 

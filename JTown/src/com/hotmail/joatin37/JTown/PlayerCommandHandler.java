@@ -38,6 +38,8 @@ import java.util.UUID;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 
+import com.hotmail.joatin37.JTown.core.BlockEditMode;
+
 public class PlayerCommandHandler {
 
 	private final JTown jtown;
@@ -63,10 +65,18 @@ public class PlayerCommandHandler {
 
 					break;
 
+				case "start":
+					BlockEditMode.Start(this.jtown, player,
+							this.jtown.getICollectionManager()
+									.getCurrentCollection(player.getName()));
+					break;
+				case "pin":
+					BlockEditMode.addPinPoint(player);
+					break;
+
 				}
 			}
 		}
 
 	}
-
 }

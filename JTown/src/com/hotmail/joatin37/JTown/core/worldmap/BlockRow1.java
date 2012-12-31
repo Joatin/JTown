@@ -33,27 +33,50 @@
 
 package com.hotmail.joatin37.JTown.core.worldmap;
 
+import java.nio.ByteBuffer;
 import java.util.UUID;
 
-public final class BlockRow {
+public final class BlockRow1 {
 
-	public static int Size = 48;
+	public static int Size = 44;
 
 	private final UUID collection;
-	private final UUID plot;
+	private UUID plot;
 	private final int posx;
 	private final int posz;
-	private final int maxheight;
-	private final int minheight;
+	private final short maxheight;
+	private final short minheight;
 
-	public BlockRow(UUID collection, UUID plot, int posx, int posz,
+	public BlockRow1(UUID collection, UUID plot, int posx, int posz,
 			int maxheight, int minheight) {
+		if (collection == null) {
+			throw new NullPointerException();
+		}
 		this.collection = collection;
 		this.plot = plot;
 		this.posx = posx;
 		this.posz = posz;
-		this.maxheight = maxheight;
-		this.minheight = minheight;
+		this.maxheight = (short) maxheight;
+		this.minheight = (short) minheight;
+	}
+
+	public byte[] getBytes() {
+		ByteBuffer buff = ByteBuffer.wrap(new byte[44]);
+		buff.putLong(this.collection.getMostSignificantBits());
+		buff.putLong(this.collection.getLeastSignificantBits());
+		if (this.plot != null) {
+			buff.putLong(this.plot.getMostSignificantBits());
+			buff.putLong(this.plot.getLeastSignificantBits());
+		} else {
+			buff.putLong(0l);
+			buff.putLong(0l);
+		}
+		buff.putInt(this.posx);
+		buff.putInt(this.posz);
+		buff.putShort(this.maxheight);
+		buff.putShort(this.minheight);
+		return buff.array();
+
 	}
 
 	public UUID getCollectionId() {

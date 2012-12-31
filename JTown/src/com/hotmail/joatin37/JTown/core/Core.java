@@ -56,11 +56,13 @@ public final class Core implements ICore, Listener {
 	private File configfile = null;
 	private final JavaPlugin plugin;
 	private boolean skipsave = false;
+	private final BlockEditMode editmode;
 
 	public Core(JavaPlugin plugin) {
 		this.plugin = plugin;
 		this.extensions = new HashMap<String, JTownExtension>();
 		this.manager = new CollectionManager(plugin, this);
+		this.editmode = new BlockEditMode(this);
 		this.reloadConfig();
 		if (this.getConfig().getBoolean("website", false)) {
 			plugin.getServer().getPluginManager().registerEvents(this, plugin);
