@@ -24,7 +24,7 @@ public class Town extends Collection {
 
 	@Override
 	public String getKind() {
-		return "Town";
+		return "town";
 	}
 
 	@Override

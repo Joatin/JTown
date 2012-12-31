@@ -133,6 +133,7 @@ public class JChunk extends HashMap<BlockPos, BlockRow1> {
 		while (it.hasNext()) {
 			buff.put(it.next().getBytes());
 		}
+		buff.flip();
 		return buff.array();
 
 	}

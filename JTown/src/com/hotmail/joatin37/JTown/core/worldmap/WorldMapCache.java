@@ -149,18 +149,16 @@ public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
 		try {
 			sfile = File.createTempFile("tempfile", null,
 					this.savefile.getParentFile());
+			sfile.deleteOnExit();
 			try {
 				input = new DataInputStream(new FileInputStream(this.savefile));
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
-			output = new DataOutputStream(new FileOutputStream("temp"));
+			output = new DataOutputStream(new FileOutputStream(sfile));
 			output.writeInt(this.VERSION);
 			if (input != null) {
-				input.readInt(); // reads the version int;
-
 				try {
+					input.readInt(); // reads the version int;
 					while (true) {
 						int size = input.readInt();
 						int a = input.readInt();
@@ -181,22 +179,26 @@ public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
 						}
 					}
 				} catch (EOFException e) {
+					input.close();
 				}
 			}
 			if (this.dirtychunks.size() != 0) {
 				Iterator<JChunk> dirty = this.dirtychunks.values().iterator();
 				while (dirty.hasNext()) {
 					byte[] w = dirty.next().getBytes();
-					output.write(w.length);
+					this.jtown.getLogger().info(
+							"Writing bytes of lenght" + w.length);
+					output.writeInt(w.length);
 					output.write(w);
 				}
 			}
+			output.flush();
+			output.close();
+			this.savefile.delete();
 			Files.copy(sfile, this.savefile);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -208,7 +210,7 @@ public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
 		try {
 			input = new DataInputStream(new FileInputStream(this.savefile));
 			input.readInt(); // reads the version number;
-			vec = new Vector<ChunkPos>(input.readInt(), 5);
+			vec = new Vector<ChunkPos>(100, 20);
 			try {
 				while (true) {
 					int size = input.readInt();
@@ -228,8 +230,7 @@ public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
 			this.jtown.getLogger().warning(
 					"The file " + this.savefile + " was missing");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
 		}
 		if (vec == null) {
 			vec = new Vector<ChunkPos>();
@@ -275,6 +276,7 @@ public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
 							input.read(u);
 							chunk.reconstructFromBytes(this.VERSION, u);
 							input.close();
+							this.put(ChunkPos.Wrap(a, b), chunk);
 							return chunk;
 						}
 

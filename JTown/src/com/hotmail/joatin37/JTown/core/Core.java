@@ -56,17 +56,12 @@ public final class Core implements ICore, Listener {
 	private File configfile = null;
 	private final JavaPlugin plugin;
 	private boolean skipsave = false;
-	private final BlockEditMode editmode;
+	private BlockEditMode editmode;
 
 	public Core(JavaPlugin plugin) {
 		this.plugin = plugin;
 		this.extensions = new HashMap<String, JTownExtension>();
-		this.manager = new CollectionManager(plugin, this);
-		this.editmode = new BlockEditMode(this);
-		this.reloadConfig();
-		if (this.getConfig().getBoolean("website", false)) {
-			plugin.getServer().getPluginManager().registerEvents(this, plugin);
-		}
+		this.manager = new CollectionManager(this.plugin, this);
 	}
 
 	public void sendCoreInfoMessage(String message) {
@@ -105,6 +100,13 @@ public final class Core implements ICore, Listener {
 
 	public void init() {
 		this.manager.onInit();
+		this.editmode = new BlockEditMode(this);
+		this.reloadConfig();
+		if (this.getConfig().getBoolean("website", false)) {
+			this.plugin.getServer().getPluginManager()
+					.registerEvents(this, this.plugin);
+		}
+
 	}
 
 	public void reloadConfig() {

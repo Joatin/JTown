@@ -190,8 +190,6 @@ public final class CollectionManager implements Listener, ICollectionManager {
 		this.players = new HashMap<String, Collection>();
 		this.collections = new HashMap<UUID, Collection>();
 
-		this.load();
-
 	}
 
 	@Override
@@ -206,8 +204,12 @@ public final class CollectionManager implements Listener, ICollectionManager {
 
 	private Collection reconstructCollection(String plugin, String type,
 			UUID uuid) {
-		return this.core.getExtension(plugin).constructCollection(type, this,
-				uuid, this.saveconfig);
+		Collection coll = this.core.getExtension(plugin).constructCollection(
+				type, this, uuid, this.saveconfig);
+		if (coll == null) {
+			throw new NullPointerException();
+		}
+		return coll;
 	}
 
 	@Override
@@ -217,6 +219,7 @@ public final class CollectionManager implements Listener, ICollectionManager {
 	}
 
 	protected void onInit() {
+		this.load();
 		this.worldmap = new WorldMap(this.jtown, this);
 		this.jtown.getServer().getPluginManager()
 				.registerEvents(this, this.jtown);
@@ -272,7 +275,6 @@ public final class CollectionManager implements Listener, ICollectionManager {
 					JUtil.getPluginFromUuidString(s),
 					JUtil.getTypeFromUuidString(s), JUtil.stringToUUID(s));
 			this.collections.put(JUtil.stringToUUID(s), coll);
-			// TODO if(coll instanceof town)
 		}
 
 	}

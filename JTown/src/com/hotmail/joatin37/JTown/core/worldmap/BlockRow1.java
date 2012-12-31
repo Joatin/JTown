@@ -75,6 +75,7 @@ public final class BlockRow1 {
 		buff.putInt(this.posz);
 		buff.putShort(this.maxheight);
 		buff.putShort(this.minheight);
+
 		return buff.array();
 
 	}
