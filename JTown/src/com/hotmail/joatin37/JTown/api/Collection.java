@@ -181,6 +181,19 @@ public abstract class Collection {
 	private HashMap<UUID, Plot> plots;
 	private HashMap<Player, Plot> playersinside;
 
+	/**
+	 * The constructor used for restoring a Collection.
+	 * 
+	 * @param manager
+	 *            The ICollectionManager that manages this collection
+	 * @param uuid
+	 *            The uuid for this collection.
+	 * @param plugin
+	 *            The plugin that constructs this plugin
+	 * @param loadfile
+	 *            The Yaml file used to restore data for this collection
+	 * @since 1.0.0
+	 */
 	public Collection(ICollectionManager manager, UUID uuid,
 			JTownExtension plugin, FileConfiguration loadfile) {
 		this.plugin = plugin;
@@ -211,16 +224,50 @@ public abstract class Collection {
 		this.owner = owner;
 	}
 
+	/**
+	 * Use this to get the UUID for this collection.
+	 * 
+	 * @return The UUID for this collection
+	 * @since 1.0.0
+	 */
 	public final UUID getUUID() {
 		return this.uuid;
 	}
 
+	/**
+	 * This method must return a unique String that tells what type of
+	 * collection this is. One example is "town". That tells the manager to
+	 * order the plugin that creates this type of collection to make a
+	 * collection of type "town".
+	 * 
+	 * @return A String representation of this collection type.
+	 * @since 1.0.0
+	 */
 	public abstract String getKind();
 
+	/**
+	 * Used to get the name of this plugin, it should preferbly be unique for
+	 * this plugin. It could be used when you search for a collection, or when
+	 * adressing it in a command. All of these cases requires that the name is
+	 * unique. One way to make sure it's unique is to make a static list and add
+	 * all names to it during construction. If the list containes the new name
+	 * you wan't to use. Tell the user to come up with another one.
+	 * 
+	 * @return A String with the collections name.
+	 */
 	public String getPluginName() {
 		return this.plugin.getName();
 	}
 
+	/**
+	 * Used by the CollectionManager to store the collection. It's not
+	 * recomended that you use this method!
+	 * 
+	 * @param config
+	 *            The Yaml file used for saving.
+	 * @return The UUID of this collection.
+	 * @since 1.0.0
+	 */
 	public final UUID save(FileConfiguration config) {
 		config.set(JUtil.uuidToString(this.uuid) + ".kind", this.getKind());
 		config.set(JUtil.uuidToString(this.uuid) + ".owner", this.owner);
@@ -239,6 +286,10 @@ public abstract class Collection {
 	/*------Custom events------*/
 
 	public void PlayerEntered(Player player, BlockRow row, PlayerMoveEvent event) {
+
+	}
+
+	public void PlayerLeft(Player player, BlockRow row, PlayerMoveEvent event) {
 
 	}
 

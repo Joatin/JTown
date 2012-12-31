@@ -144,4 +144,8 @@ public final class Core implements ICore, Listener {
 	public ICollectionManager getManager() {
 		return this.manager;
 	}
+
+	public void save() {
+		this.manager.save();
+	}
 }

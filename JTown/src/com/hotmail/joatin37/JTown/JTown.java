@@ -82,6 +82,11 @@ public class JTown extends JTownExtension implements IJTown, Listener {
 	}
 
 	@Override
+	public void onDisable() {
+		this.core.save();
+	}
+
+	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label,
 			String[] args) {
 		if (sender instanceof Player) {
