@@ -42,11 +42,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
 import com.hotmail.joatin37.JTown.api.Collection;
+import com.hotmail.joatin37.JTown.api.ICollectionManager;
 import com.hotmail.joatin37.JTown.api.ICore;
 import com.hotmail.joatin37.JTown.api.IJTown;
 import com.hotmail.joatin37.JTown.api.JTownExtension;
 import com.hotmail.joatin37.JTown.api.Plot;
-import com.hotmail.joatin37.JTown.core.CollectionManager;
 import com.hotmail.joatin37.JTown.core.Core;
 import com.hotmail.joatin37.JTown.util.GraphCollector;
 
@@ -113,7 +113,7 @@ public class JTown extends JTownExtension implements IJTown, Listener {
 
 	@Override
 	public Collection constructCollection(String kind,
-			CollectionManager parent, UUID uuid, FileConfiguration config) {
+			ICollectionManager parent, UUID uuid, FileConfiguration config) {
 
 		return new Town(parent, uuid, this, config);
 

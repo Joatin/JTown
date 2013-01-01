@@ -44,6 +44,10 @@ import com.hotmail.joatin37.JTown.api.ICollectionManager;
 
 public class JChunk extends HashMap<BlockPos, BlockRow1> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final int x;
 	private final int z;
 	private final ICollectionManager manager;
@@ -133,7 +137,6 @@ public class JChunk extends HashMap<BlockPos, BlockRow1> {
 		while (it.hasNext()) {
 			buff.put(it.next().getBytes());
 		}
-		buff.flip();
 		return buff.array();
 
 	}

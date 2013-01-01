@@ -77,6 +77,9 @@ public class PlayerCommandHandler {
 				}
 			}
 		}
+		if (cmd.getName().equalsIgnoreCase("plot")) {
+
+		}
 
 	}
 }

@@ -149,7 +149,6 @@ public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
 		try {
 			sfile = File.createTempFile("tempfile", null,
 					this.savefile.getParentFile());
-			sfile.deleteOnExit();
 			try {
 				input = new DataInputStream(new FileInputStream(this.savefile));
 			} catch (FileNotFoundException e) {
@@ -196,6 +195,7 @@ public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
 			output.close();
 			this.savefile.delete();
 			Files.copy(sfile, this.savefile);
+			sfile.delete();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -264,7 +264,7 @@ public class WorldMapCache extends LinkedHashMap<ChunkPos, JChunk> {
 			DataInputStream input;
 			try {
 				input = new DataInputStream(new FileInputStream(this.savefile));
-				input.skip(8);
+				input.skip(4);
 				try {
 					while (true) {
 						int size = input.readInt();

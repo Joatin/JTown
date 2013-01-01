@@ -198,6 +198,14 @@ public abstract class Collection {
 		return this.landmass;
 	}
 
+	public ICollectionManager getParentManager() {
+		return this.manager;
+	}
+
+	public boolean isPlayerInside(String player) {
+		return this.playersinside.get(player) != null;
+	}
+
 	/**
 	 * The constructor used for restoring a Collection.
 	 * 

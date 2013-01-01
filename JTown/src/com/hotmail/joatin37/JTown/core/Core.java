@@ -47,19 +47,23 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.hotmail.joatin37.JTown.api.ICollectionManager;
 import com.hotmail.joatin37.JTown.api.ICore;
 import com.hotmail.joatin37.JTown.api.JTownExtension;
+import com.hotmail.joatin37.JTown.core.website.Website;
 
 public final class Core implements ICore, Listener {
 
 	private final HashMap<String, JTownExtension> extensions;
+	private final HashMap<String, JTownExtension> websites;
 	private final CollectionManager manager;
 	private FileConfiguration config = null;
 	private File configfile = null;
 	private final JavaPlugin plugin;
 	private boolean skipsave = false;
 	private BlockEditMode editmode;
+	private Website website;
 
 	public Core(JavaPlugin plugin) {
 		this.plugin = plugin;
+		this.websites = new HashMap<String, JTownExtension>();
 		this.extensions = new HashMap<String, JTownExtension>();
 		this.manager = new CollectionManager(this.plugin, this);
 	}
@@ -103,8 +107,7 @@ public final class Core implements ICore, Listener {
 		this.editmode = new BlockEditMode(this);
 		this.reloadConfig();
 		if (this.getConfig().getBoolean("website", false)) {
-			this.plugin.getServer().getPluginManager()
-					.registerEvents(this, this.plugin);
+			this.website = new Website(this);
 		}
 
 	}
@@ -150,6 +153,10 @@ public final class Core implements ICore, Listener {
 	}
 
 	public void save() {
+		this.saveConfig();
 		this.manager.save();
+		if (this.website != null) {
+			this.website.save();
+		}
 	}
 }
