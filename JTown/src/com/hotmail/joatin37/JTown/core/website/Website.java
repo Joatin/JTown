@@ -33,13 +33,17 @@
 
 package com.hotmail.joatin37.JTown.core.website;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.logging.Level;
+
+import javax.net.ssl.SSLServerSocket;
+import javax.net.ssl.SSLServerSocketFactory;
+import javax.net.ssl.SSLSocket;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -51,13 +55,14 @@ public class Website implements Runnable {
 	private Core core;
 	private FileConfiguration config = null;
 	private File configfile = null;
-	private ServerSocket socket;
+	private SSLServerSocket socket;
 
 	public Website(Core core) {
 		this.core = core;
 		this.getConfig();
 		try {
-			this.socket = new ServerSocket(this.getConfig().getInt("port", 443));
+			this.socket = (SSLServerSocket) SSLServerSocketFactory.getDefault()
+					.createServerSocket(this.getConfig().getInt("port", 443));
 		} catch (IOException e) {
 			core.getPlugin()
 					.getLogger()
@@ -72,12 +77,20 @@ public class Website implements Runnable {
 	public void run() {
 		while (true) {
 			try {
-				Socket csocket = this.socket.accept();
+				SSLSocket csocket = (SSLSocket) this.socket.accept();
+				csocket.startHandshake();
 				this.core.getPlugin().getLogger()
 						.info("[WebSite] New connection!!!");
+				BufferedReader input = new BufferedReader(
+						new InputStreamReader(csocket.getInputStream()));
+				String s;
+				while ((s = input.readLine()) != null) {
+					this.core.getPlugin().getLogger().info("[WebSite] " + s);
+				}
 				OutputStream output = csocket.getOutputStream();
 				output.write("<p>HEllo world!</p>".getBytes());
 				output.flush();
+				input.close();
 				output.close();
 				csocket.close();
 
