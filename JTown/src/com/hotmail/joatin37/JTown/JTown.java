@@ -33,24 +33,15 @@
 
 package com.hotmail.joatin37.JTown;
 
-import java.util.UUID;
-
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.java.JavaPlugin;
 
-import com.hotmail.joatin37.JTown.api.Collection;
-import com.hotmail.joatin37.JTown.api.ICollectionManager;
-import com.hotmail.joatin37.JTown.api.ICore;
-import com.hotmail.joatin37.JTown.api.IJTown;
-import com.hotmail.joatin37.JTown.api.JTownExtension;
-import com.hotmail.joatin37.JTown.api.Plot;
-import com.hotmail.joatin37.JTown.core.Core;
 import com.hotmail.joatin37.JTown.util.GraphCollector;
 
-public class JTown extends JTownExtension implements IJTown, Listener {
+public class JTown extends JavaPlugin implements Listener {
 
 	PlayerCommandHandler playercommand;
 	ServerCommandHandler servercommand;
@@ -59,13 +50,8 @@ public class JTown extends JTownExtension implements IJTown, Listener {
 
 	private GraphCollector graphcollector;
 
-	private ICore icore;
-	private Core core;
-
 	@Override
 	public void onEnable() {
-
-		this.core.init();
 
 		this.graphcollector = new GraphCollector(this);
 
@@ -81,7 +67,6 @@ public class JTown extends JTownExtension implements IJTown, Listener {
 
 	@Override
 	public void onDisable() {
-		this.core.save();
 	}
 
 	@Override
@@ -96,32 +81,8 @@ public class JTown extends JTownExtension implements IJTown, Listener {
 
 	}
 
-	public JTown() {
-		this.core = new Core(this);
-		this.icore = this.core;
-	}
-
 	@Override
 	public void onLoad() {
-		this.hook();
 	}
 
-	@Override
-	public ICore getICore() {
-		return this.icore;
-	}
-
-	@Override
-	public Collection constructCollection(String kind,
-			ICollectionManager parent, UUID uuid, FileConfiguration config) {
-
-		return new Town(parent, uuid, this, config);
-
-	}
-
-	@Override
-	public Plot constructPlot(String kind, Collection parent, UUID uuid) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
