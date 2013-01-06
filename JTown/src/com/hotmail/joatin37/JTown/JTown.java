@@ -46,6 +46,8 @@ public class JTown extends JavaPlugin implements Listener {
 	PlayerCommandHandler playercommand;
 	ServerCommandHandler servercommand;
 
+	ExtensionManager manager;
+
 	private int amounttowns = 1;
 
 	private GraphCollector graphcollector;
@@ -83,6 +85,7 @@ public class JTown extends JavaPlugin implements Listener {
 
 	@Override
 	public void onLoad() {
+		this.manager = new ExtensionManager(this);
 	}
 
 }
